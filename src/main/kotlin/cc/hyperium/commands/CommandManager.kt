@@ -1,42 +1,23 @@
 package cc.hyperium.commands
 
-import cc.hyperium.Hyperium
 import cc.hyperium.commands.api.ICommand
 import cc.hyperium.commands.engine.AnnotationCommandLoader
 import cc.hyperium.commands.engine.CommandData
 import cc.hyperium.commands.engine.CommandParser
-import cc.hyperium.events.SendChatEvent
-import com.google.common.eventbus.Subscribe
+import cc.hyperium.service.IService
+import cc.hyperium.service.Service
+import me.kbrewster.blazeapi.EVENT_BUS
+import me.kbrewster.blazeapi.events.ChatSentEvent
+import me.kbrewster.eventbus.Subscribe
 
-object CommandManager {
+@Service
+object CommandManager : IService {
     private val commandLoaders = listOf(AnnotationCommandLoader)
-
     private val commands = mutableListOf<CommandData>()
 
-    init {
+    override fun initialize() {
+        EVENT_BUS.register(this)
         loadCommands()
-        Hyperium.EVENT_BUS.register(this)
-        println("REGISTERED!")
-    }
-
-    @Subscribe
-    fun onSendChat(event: SendChatEvent) {
-        println("said ${event.message}")
-        execute(event.message)
-    }
-
-    fun execute(longCommand: String) {
-        val command = if (longCommand[0] == '/') longCommand.substring(1) else longCommand
-
-        if (command.isEmpty()) return
-
-        val split = command.split(" ")
-
-        val commandData = commands.firstOrNull {
-            it.name == split[0]
-        } ?: return
-
-        CommandParser.parseAndCallFunction(split.drop(1), commandData)
     }
 
     fun addCommandFromClass(commandClass: ICommand) {
@@ -52,7 +33,28 @@ object CommandManager {
         ))
     }
 
-    fun loadCommands() {
+    @Subscribe
+    fun onSendChat(event: ChatSentEvent) {
+        if (execute(event.message)) event.cancelled = true
+    }
+
+    private fun execute(longCommand: String): Boolean {
+        val command = if (longCommand[0] == '/') longCommand.substring(1) else longCommand
+
+        if (command.isEmpty()) return false
+
+        val split = command.split(" ")
+
+        val commandData = commands.firstOrNull {
+            it.name == split[0]
+        } ?: return false
+
+        CommandParser.parseAndCallFunction(split.drop(1), commandData)
+
+        return true
+    }
+
+    private fun loadCommands() {
         commandLoaders.forEach {
             commands.addAll(it.loadCommands())
         }

@@ -3,7 +3,7 @@ package cc.hyperium.commands.api
 interface ICommand {
     fun getName(): String
     fun getUsage(): String
-    fun execute()
+    fun execute(@Greedy args: String)
 }
 
 /**

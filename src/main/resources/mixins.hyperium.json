@@ -6,8 +6,6 @@
   "verbose": true,
   "mixins": [
     "renderer.MixinRenderManager",
-    "entity.MixinEntityPlayerSP",
-    "MixinMain",
     "MixinMinecraft"
   ]
 }

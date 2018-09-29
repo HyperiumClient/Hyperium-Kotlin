@@ -55,7 +55,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
-    compile 'com.github.KevinPriv:BlazeAPI:minecraft-1.8.9-SNAPSHOT'
+    compile 'com.github.KevinPriv:BlazeAPI:0bfa2bac5a'
 
     compile 'com.github.FalseHonesty:reflections:855f40b80b'
 }

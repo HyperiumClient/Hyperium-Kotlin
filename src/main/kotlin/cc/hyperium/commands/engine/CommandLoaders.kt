@@ -21,21 +21,23 @@ object AnnotationCommandLoader : CommandLoader {
     override fun loadCommands(): List<CommandData> {
         return ref.getMethodsAnnotatedWith(Command::class.java).asSequence().map {
             it.kotlinFunction!!
-        }.map {
-            val kotlinClass = it.javaMethod!!.declaringClass.kotlin
-            val inst = kotlinClass.objectInstance ?: kotlinClass.companionObjectInstance ?: return@map null
-            val cmd = it.findAnnotation<Command>()!!
-            val usage = inst::class.memberFunctions.firstOrNull { inner ->
-                inner.name == cmd.usage && (it.returnType.classifier as KClass<*>).simpleName == "String"
-            } ?: CommandManager::getGenericErrorMessage
+        }.map(::mapToData).filterNotNull().toList()
+    }
 
-            CommandData(
-                    cmd.name,
-                    it.parameters,
-                    it,
-                    usage as KFunction<String>,
-                    inst
-            )
-        }.filterNotNull().toList()
+    private fun mapToData(it: KFunction<*>): CommandData? {
+        val kotlinClass = it.javaMethod!!.declaringClass.kotlin
+        val inst = kotlinClass.objectInstance ?: kotlinClass.companionObjectInstance ?: return null
+        val cmd = it.findAnnotation<Command>()!!
+        val usage = inst::class.memberFunctions.firstOrNull { inner ->
+            inner.name == cmd.usage
+        } ?: CommandManager::getGenericErrorMessage
+
+        return CommandData(
+                cmd.name,
+                it.parameters,
+                it,
+                usage,
+                inst
+        )
     }
 }

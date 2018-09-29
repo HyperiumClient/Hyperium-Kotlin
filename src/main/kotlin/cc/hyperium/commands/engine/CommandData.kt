@@ -7,6 +7,6 @@ data class CommandData(
         val name: String,
         val parameters: List<KParameter>,
         val function: KFunction<*>,
-        val usage: KFunction<String>,
+        val usage: KFunction<*>,
         val instance: Any
 )

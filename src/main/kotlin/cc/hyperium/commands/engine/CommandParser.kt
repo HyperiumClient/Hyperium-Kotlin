@@ -2,6 +2,8 @@ package cc.hyperium.commands.engine
 
 import cc.hyperium.commands.api.ArgumentParser
 import cc.hyperium.commands.api.ArgumentQueue
+import me.kbrewster.blazeapi.client.thePlayer
+import net.minecraft.util.ChatComponentText
 import java.util.*
 import kotlin.reflect.KClass
 import kotlin.reflect.KParameter
@@ -28,12 +30,15 @@ object CommandParser {
             data.parameters.forEach {
                 paramMap[it] = parseParameter(it, queue, data)
             }
-        } catch (e: Exception) {
-            //TODO: CHAT THIS
-            println(data.usage.call(data.instance))
-        }
 
-        data.function.callBy(paramMap)
+            data.function.callBy(paramMap)
+        } catch (e: Exception) {
+            val usage = if (data.usage.parameters.isNotEmpty()) data.usage.call(data.instance) else data.usage.call()
+
+            thePlayer.addChatMessage(ChatComponentText(
+                    usage.toString()
+            ))
+        }
     }
 
     private fun parseParameter(param: KParameter, queue: ArgumentQueue, data: CommandData): Any {
@@ -44,8 +49,8 @@ object CommandParser {
         val type = param.type
         val clazz = type.classifier as KClass<*>
 
-        if (clazz.simpleName == "Optional") {
-            val typeClazz = clazz.typeParameters[0] as KClass<*>
+        if (clazz == Optional::class) {
+            val typeClazz = type.arguments[0].type!!.classifier as KClass<*>
 
             val parsed = getParsedArgument(param, typeClazz, queue)
             return Optional.ofNullable(parsed)
@@ -55,6 +60,8 @@ object CommandParser {
     }
 
     private fun getParsedArgument(param: KParameter, type: KClass<*>, queue: ArgumentQueue): Any? {
+        if (!argumentParsers.containsKey(type)) println("NO PARSER FOR TYPE $type")
+
         return try {
             argumentParsers[type]?.parse(queue, param).also { queue.sync() }
         } catch (e: Exception) {
