@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "package": "cc.hyperium.mixins",
+  "refmap": "mixin.hyperium.refmap.json",
+  "verbose": true,
+  "mixins": [
+    "renderer.MixinRenderManager",
+    "entity.MixinEntityPlayerSP",
+    "MixinMain",
+    "MixinMinecraft"
+  ]
+}

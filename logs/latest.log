@@ -1,0 +1,47 @@
+[02:06:17] [main/INFO]: username: zzzippytwo@hotmail.com
+[02:06:17] [main/INFO]: Extra: [--tweakClass, cc.hyperium.launch.HyperiumTweaker]
+[02:06:17] [main/INFO]: Password found, attempting login
+[02:06:17] [main/INFO]: Logging in with username & password
+[02:06:18] [main/INFO]: Login Succesful!
+[02:06:18] [main/INFO]: Running with arguments: [--userProperties, [], --assetsDir, C:/Users/Hunter/.gradle/caches/minecraft/assets, --assetIndex, 1.8, --userType, mojang, --accessToken{REDACTED}, --version, 1.8.9, --uuid, 02f62a6be7484546b9ff26e3ab4b1076, --username, FalseHonesty, --tweakClass, cc.hyperium.launch.HyperiumTweaker]
+[02:06:18] [main/INFO]: Loading tweak class name cc.hyperium.launch.HyperiumTweaker
+[02:06:18] [main/INFO]: Using primary tweak class name cc.hyperium.launch.HyperiumTweaker
+[02:06:18] [main/INFO]: Calling tweak class cc.hyperium.launch.HyperiumTweaker
+[02:06:18] [main/INFO]: SpongePowered MIXIN Subsystem Version=0.7.7 Source=file:/C:/Users/Hunter/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.7.7-SNAPSHOT/f2ed927d19ca8c448530436d38951a629a57e2eb/mixin-0.7.7-SNAPSHOT.jar Service=LaunchWrapper Env=UNKNOWN
+[02:06:18] [main/INFO]: FML platform manager could not load class cpw.mods.fml.relauncher.CoreModManager. Proceeding without FML support.
+[02:06:18] [main/INFO]: Compatibility level set to JAVA_8
+[02:06:18] [main/ERROR]: Mixin config mixins.hyperium.json does not specify "minVersion" property
+[02:06:18] [main/INFO]: Loading tweak class name org.spongepowered.asm.mixin.EnvironmentStateTweaker
+[02:06:18] [main/INFO]: Calling tweak class org.spongepowered.asm.mixin.EnvironmentStateTweaker
+[02:06:18] [main/WARN]: Reference map 'mixin.hyperium.refmap.json' for mixins.hyperium.json could not be read. If this is a development environment you can ignore this message
+[02:06:18] [main/INFO]: Mixing MixinMain from mixins.hyperium.json into net.minecraft.client.main.Main
+[02:06:18] [main/INFO]: Launching wrapped minecraft {net.minecraft.client.main.Main}
+[02:06:18] [main/INFO]: Mixing MixinMinecraft from mixins.hyperium.json into net.minecraft.client.Minecraft
+[02:06:18] [main/INFO]: Mixing entity.MixinEntityPlayerSP from mixins.hyperium.json into net.minecraft.client.entity.EntityPlayerSP
+[02:06:20] [Client thread/INFO]: Setting user: Player280
+[02:06:20] [Client thread/INFO]: (Session ID is token:gey:Player280)
+[02:06:21] [Client thread/INFO]: LWJGL Version: 2.9.3
+[02:06:22] [Client thread/INFO]: Reloading ResourceManager: Default
+[02:06:22] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[02:06:22] [Thread-7/INFO]: Initializing LWJGL OpenAL
+[02:06:22] [Thread-7/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[02:06:22] [Thread-7/INFO]: OpenAL initialized.
+[02:06:23] [Sound Library Loader/INFO]: Sound engine started
+[02:06:24] [Client thread/INFO]: Created: 512x512 textures-atlas
+[02:06:24] [Client thread/INFO]: Mixing renderer.MixinRenderManager from mixins.hyperium.json into net.minecraft.client.renderer.entity.RenderManager
+[02:06:33] [Server thread/INFO]: Starting integrated minecraft server version 1.8.9
+[02:06:33] [Server thread/INFO]: Generating keypair
+[02:06:33] [Server thread/INFO]: Preparing start region for level 0
+[02:06:34] [Server thread/INFO]: Changing view distance to 12, from 10
+[02:06:34] [Server thread/INFO]: Player280[local:E:7d5baa7a] logged in with entity id 358 at (94.5, 70.0, 91.5)
+[02:06:34] [Server thread/INFO]: Player280 joined the game
+[02:06:37] [Client thread/INFO]: [CHAT] Unknown command. Try /help for a list of commands
+[02:06:48] [Client thread/INFO]: Stopping!
+[02:06:48] [Client thread/INFO]: SoundSystem shutting down...
+[02:06:48] [Server thread/INFO]: Stopping server
+[02:06:48] [Server thread/INFO]: Saving players
+[02:06:48] [Server thread/INFO]: Saving worlds
+[02:06:48] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[02:06:48] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[02:06:48] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[02:06:49] [Client thread/WARN]: Author: Paul Lamb, www.paulscode.com
