@@ -1,4 +1,4 @@
-package cc.hyperium.commands.api
+package cc.hyperium.services.commands.api
 
 interface ICommand {
     fun getName(): String

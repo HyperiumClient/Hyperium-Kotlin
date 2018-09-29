@@ -1,22 +1,22 @@
-package cc.hyperium.commands
+package cc.hyperium.services.commands
 
-import cc.hyperium.commands.api.ICommand
-import cc.hyperium.commands.engine.AnnotationCommandLoader
-import cc.hyperium.commands.engine.CommandData
-import cc.hyperium.commands.engine.CommandParser
-import cc.hyperium.service.IService
-import cc.hyperium.service.Service
-import me.kbrewster.blazeapi.EVENT_BUS
+import cc.hyperium.services.commands.api.ICommand
+import cc.hyperium.services.commands.engine.AnnotationCommandLoader
+import cc.hyperium.services.commands.engine.CommandData
+import cc.hyperium.services.commands.engine.CommandParser
+import cc.hyperium.services.AbstractService
+import cc.hyperium.services.Service
 import me.kbrewster.blazeapi.events.ChatSentEvent
 import me.kbrewster.eventbus.Subscribe
 
 @Service
-object CommandManager : IService {
+object CommandManager : AbstractService() {
     private val commandLoaders = listOf(AnnotationCommandLoader)
     private val commands = mutableListOf<CommandData>()
 
     override fun initialize() {
-        EVENT_BUS.register(this)
+        super.initialize()
+
         loadCommands()
     }
 

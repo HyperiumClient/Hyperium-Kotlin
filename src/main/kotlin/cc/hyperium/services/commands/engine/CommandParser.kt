@@ -1,7 +1,7 @@
-package cc.hyperium.commands.engine
+package cc.hyperium.services.commands.engine
 
-import cc.hyperium.commands.api.ArgumentParser
-import cc.hyperium.commands.api.ArgumentQueue
+import cc.hyperium.services.commands.api.ArgumentParser
+import cc.hyperium.services.commands.api.ArgumentQueue
 import me.kbrewster.blazeapi.client.thePlayer
 import net.minecraft.util.ChatComponentText
 import java.util.*

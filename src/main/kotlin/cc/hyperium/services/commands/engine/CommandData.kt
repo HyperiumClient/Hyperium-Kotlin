@@ -1,4 +1,4 @@
-package cc.hyperium.commands.engine
+package cc.hyperium.services.commands.engine
 
 import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter

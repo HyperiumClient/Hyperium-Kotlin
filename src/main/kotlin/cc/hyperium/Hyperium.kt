@@ -1,7 +1,7 @@
 package cc.hyperium
 
-import cc.hyperium.service.IService
-import cc.hyperium.service.Service
+import cc.hyperium.services.IService
+import cc.hyperium.services.Service
 import me.kbrewster.blazeapi.events.InitializationEvent
 import me.kbrewster.eventbus.Subscribe
 import org.reflections.Reflections

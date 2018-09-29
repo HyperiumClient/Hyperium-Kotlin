@@ -1,9 +1,8 @@
-package cc.hyperium.commands.engine
+package cc.hyperium.services.commands.engine
 
 import cc.hyperium.Hyperium
-import cc.hyperium.commands.CommandManager
-import cc.hyperium.commands.api.Command
-import kotlin.reflect.KClass
+import cc.hyperium.services.commands.CommandManager
+import cc.hyperium.services.commands.api.Command
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.companionObjectInstance
 import kotlin.reflect.full.findAnnotation

@@ -1,7 +1,7 @@
-package cc.hyperium.commands
+package cc.hyperium.services.commands
 
-import cc.hyperium.commands.api.Command
-import cc.hyperium.commands.api.Greedy
+import cc.hyperium.services.commands.api.Command
+import cc.hyperium.services.commands.api.Greedy
 import java.util.*
 
 object CmdTest {
