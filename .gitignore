@@ -13,3 +13,6 @@ src/main/java/cc/hyperium/addons/sidebar/versions/UpdateChecker.java
 crash-reports
 saves
 resourcepacks
+logs
+options.txt
+usercache.json
