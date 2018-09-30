@@ -8,7 +8,8 @@ interface ICommand {
 
 /**
  * Registers this function as a command. The function must belong to a kotlin
- * object so the instance can be located and used to call the function.
+ * object so the instance can be located and used to call the function. No additional
+ * configuration or registration is needed.
  *
  * Also specifies the function to use to display an error to the user when parameters
  * cannot be parsed correctly, called the 'usage' function. The default is 'getUsage'.
@@ -41,3 +42,17 @@ annotation class Greedy
 @Target(AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Take(val number: Int, val allowLess: Boolean = true)
+
+/**
+ * Indicates that this string parameter can be quoted.
+ *
+ * This means that if the arguments passed in are
+ * /command "one two three" four
+ * and the first accepted parameter is [Quotable] then it will receive
+ * the string 'one two three'.
+ *
+ * If no quotes are present, then only the first word will be passed in.
+ */
+@Target(AnnotationTarget.VALUE_PARAMETER)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class Quotable

@@ -2,6 +2,7 @@ package cc.hyperium.services.commands
 
 import cc.hyperium.services.commands.api.Command
 import cc.hyperium.services.commands.api.Greedy
+import cc.hyperium.services.commands.api.Quotable
 import java.util.*
 
 object CmdTest {
@@ -17,6 +18,11 @@ object CmdTest {
     @Command("thingy")
     fun thingyCommand(@Greedy consumer: String) {
         println("woW $consumer")
+    }
+
+    @Command("quotes")
+    fun withQuotes(@Quotable quotes: String) {
+        println("cool $quotes")
     }
 
     fun getUsage(): String {

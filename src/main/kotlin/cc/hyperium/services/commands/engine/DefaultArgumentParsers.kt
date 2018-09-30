@@ -1,9 +1,6 @@
 package cc.hyperium.services.commands.engine
 
-import cc.hyperium.services.commands.api.ArgumentParser
-import cc.hyperium.services.commands.api.ArgumentQueue
-import cc.hyperium.services.commands.api.Greedy
-import cc.hyperium.services.commands.api.Take
+import cc.hyperium.services.commands.api.*
 import kotlin.reflect.KParameter
 
 class IntArgumentParser : ArgumentParser {
@@ -32,18 +29,20 @@ class StringArgumentParser : ArgumentParser {
 
         val greedy = param.annotations.firstOrNull { it.annotationClass == Greedy::class } as? Greedy
         val take = param.annotations.firstOrNull { it.annotationClass == Take::class } as? Take
+        val quotable = param.annotations.firstOrNull { it.annotationClass == Quotable::class } as? Quotable
 
         val sb = StringBuilder()
+        val wordOne = arguments.poll() ?: return null
 
         if (greedy != null) {
-            sb.append(arguments.poll())
+            sb.append(wordOne)
 
             while (arguments.peek() != null) {
                 sb.append(" ${arguments.poll()}")
             }
         } else if (take != null) {
             var i = 0
-            sb.append(arguments.poll())
+            sb.append(wordOne)
 
             while (arguments.peek() != null && i < take.number) {
                 sb.append(" ${arguments.poll()}")
@@ -53,6 +52,23 @@ class StringArgumentParser : ArgumentParser {
 
             if (!take.allowLess && i < take.number - 1) {
                 throw IllegalArgumentException("Needed ${take.number} words!")
+            }
+        } else if (quotable != null) {
+            if (wordOne.startsWith("\"")) {
+                sb.append(wordOne.substring(1))
+
+                while (arguments.peek() != null) {
+                    val word = arguments.poll()!!
+
+                    if (word.endsWith("\"")) {
+                        sb.append(word.substring(0, word.length - 1))
+                        break
+                    }
+
+                    sb.append(word)
+                }
+            } else {
+                sb.append(wordOne)
             }
         }
 
