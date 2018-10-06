@@ -3,6 +3,7 @@ package cc.hyperium.services
 import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.Dispatchers
 import me.kbrewster.blazeapi.EVENT_BUS
+import org.apache.logging.log4j.LogManager
 import kotlin.coroutines.experimental.CoroutineContext
 
 /**
@@ -26,6 +27,7 @@ interface IService {
  */
 abstract class AbstractService : IService, CoroutineScope {
     override var coroutineContext: CoroutineContext = Dispatchers.Default
+    val LOGGER = LogManager.getLogger()
 
     override fun initialize() {
         EVENT_BUS.register(this)

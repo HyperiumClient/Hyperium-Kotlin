@@ -1,0 +1,1 @@
+error.loading.service=Service %s could not be loaded. Is it an object that implements IService?

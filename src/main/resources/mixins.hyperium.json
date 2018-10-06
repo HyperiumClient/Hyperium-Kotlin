@@ -5,7 +5,8 @@
   "refmap": "mixin.hyperium.refmap.json",
   "verbose": true,
   "mixins": [
-    "renderer.MixinRenderManager",
-    "MixinMinecraft"
+    "MixinMinecraft",
+    "client.resources.MixinLocale",
+    "renderer.MixinRenderManager"
   ]
 }
