@@ -3,6 +3,7 @@ package cc.hyperium
 import cc.hyperium.services.IService
 import cc.hyperium.services.Service
 import me.kbrewster.blazeapi.events.InitializationEvent
+import me.kbrewster.config.ConfigFactory
 import me.kbrewster.eventbus.Subscribe
 import net.minecraft.client.resources.I18n
 import org.apache.logging.log4j.LogManager
@@ -14,9 +15,12 @@ import org.reflections.scanners.TypeAnnotationsScanner
 import java.lang.Exception
 
 object Hyperium {
+
     val REFLECTIONS = Reflections("cc.hyperium", "com.chattriggers.ctjs", MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
     
     private val LOGGER: Logger = LogManager.getLogger()
+
+    val config = ConfigFactory.createFileConfig("config-test.json", "json")
 
     @Subscribe
     fun onInit(event: InitializationEvent) {

@@ -7,14 +7,19 @@ import org.spongepowered.asm.mixin.gen.Accessor
 
 @Mixin(RenderManager::class)
 interface MixinRenderManager {
+
     @Accessor
     fun getRenderPosX(): Double
+
     @Accessor
     fun getRenderPosY(): Double
+
     @Accessor
     fun getRenderPosZ(): Double
+
     @Accessor
     fun getSkinMap(): Map<String, RenderPlayer>
+
 }
 
 val RenderManager.mixinType: MixinRenderManager

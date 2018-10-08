@@ -4,36 +4,37 @@ import cc.hyperium.services.AbstractService
 import cc.hyperium.services.Service
 import me.kbrewster.blazeapi.events.InputEvents
 import me.kbrewster.eventbus.Subscribe
-
 @Service
 object KeybindManager : AbstractService() {
 
-    val bindingSystems = HashSet<BindingSystem<KeyboardKey>>()
+    val bindings = HashSet<Bindable<LWJGLKey>>()
 
     override fun initialize() {
         super.initialize()
-        println("test123")
-        bindingSystems += object : BindingSystem<KeyboardKey> {
 
-            override fun onKeyPress(key: KeyboardKey) {
-                println("you pressed me, bit gay js.")
+        this.bindings.add(DefaultBindable(LWJGLKey.fromName("A"), object : KeyListener<LWJGLKey> {
+            override fun onKeyPress(key: LWJGLKey) {
+                println("hello world")
             }
 
-            override fun onKeyRelease(key: KeyboardKey) {
-
+            override fun onKeyRelease(key: LWJGLKey) {
+                println("other heelo world")
             }
 
-        }
+        }))
+
+
     }
 
     @Subscribe
     fun onKeyPress(event: InputEvents.Keypress) {
-        this.bindingSystems.forEach { system ->
+        println("event")
+        this.bindings.forEach { binding ->
             val key = LWJGLKey.fromIndex(event.key)
             if (event.isPressed) {
-                system.onKeyPress(key)
+                binding.onKeyPress(key)
             } else {
-                system.onKeyRelease(key)
+                binding.onKeyRelease(key)
             }
         }
     }
