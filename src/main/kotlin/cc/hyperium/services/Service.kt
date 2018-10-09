@@ -1,10 +1,24 @@
 package cc.hyperium.services
 
+import cc.hyperium.Hyperium
 import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.Dispatchers
 import me.kbrewster.blazeapi.EVENT_BUS
+import net.minecraft.client.resources.I18n
 import org.apache.logging.log4j.LogManager
+import org.reflections.Reflections
 import kotlin.coroutines.experimental.CoroutineContext
+
+fun bootstrapServices(ref: Reflections) {
+    fun onError(serviceName: String): IService? {
+        Hyperium.LOGGER.error(I18n.format("error.loading.service", serviceName))
+        return null
+    }
+
+    ref.getTypesAnnotatedWith(Service::class.java).asSequence().map {
+        it.kotlin.objectInstance as? IService ?: onError(it.name)
+    }.filterNotNull().forEach(IService::initialize)
+}
 
 /**
  * Indicates that this Service should be loaded at startup.

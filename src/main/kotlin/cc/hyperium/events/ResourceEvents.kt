@@ -1,2 +1,0 @@
-package cc.hyperium.events
-

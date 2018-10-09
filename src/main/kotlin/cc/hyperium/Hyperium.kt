@@ -1,36 +1,48 @@
 package cc.hyperium
 
-import cc.hyperium.services.IService
-import cc.hyperium.services.Service
+import cc.hyperium.network.NetworkManager
+import cc.hyperium.services.bootstrapServices
+import kotlinx.coroutines.experimental.GlobalScope
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
 import me.kbrewster.blazeapi.events.InitializationEvent
 import me.kbrewster.config.ConfigFactory
 import me.kbrewster.eventbus.Subscribe
-import net.minecraft.client.resources.I18n
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
 import org.reflections.scanners.SubTypesScanner
 import org.reflections.scanners.TypeAnnotationsScanner
-import java.lang.Exception
 
 object Hyperium {
-
     val REFLECTIONS = Reflections("cc.hyperium", "com.chattriggers.ctjs", MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
-    
-    private val LOGGER: Logger = LogManager.getLogger()
-
     val config = ConfigFactory.createFileConfig("config-test.json", "json")
+    val LOGGER: Logger = LogManager.getLogger()
 
     @Subscribe
     fun onInit(event: InitializationEvent) {
-        REFLECTIONS.getTypesAnnotatedWith(Service::class.java).asSequence().map {
-            return@map try {
-                it.kotlin.objectInstance as IService
+
+        // Start all of the services of the client!
+        // This includes the Client-Server connection, which will be started asynchronously
+        val networkJob = GlobalScope.launch {
+            try {
+                NetworkManager.bootstrapClient()
             } catch (e: Exception) {
-                LOGGER.error(I18n.format("error.loading.service", it.name))
-                null
+                LOGGER.fatal("The connection to the Hyperium Server could not be completed.")
             }
-        }.filterNotNull().forEach(IService::initialize)
+        }
+
+        bootstrapServices(REFLECTIONS)
+
+        // However, by the time we are starting the client, we want to be registered.
+        // To confirm that this has happened, we will join the network job thread,
+        // Which will block until the operation is complete, or if it already has,
+        // it will return immediately. We do need to wrap the call to join in another
+        // coroutine scope however, as the join method is marked with 'suspend.'
+        // the runBlocking call simply merges the divide between blocking code and coroutines.
+        runBlocking {
+            networkJob.join()
+        }
     }
 }
