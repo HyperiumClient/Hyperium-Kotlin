@@ -14,11 +14,11 @@ object KeybindManager : AbstractService() {
 
         this.bindings.add(DefaultBindable(LWJGLKey.fromName("A"), object : KeyListener<LWJGLKey> {
             override fun onKeyPress(key: LWJGLKey) {
-                println("hello world")
+                //println("hello world")
             }
 
             override fun onKeyRelease(key: LWJGLKey) {
-                println("other heelo world")
+                //println("other heelo world")
             }
 
         }))
@@ -28,7 +28,7 @@ object KeybindManager : AbstractService() {
 
     @Subscribe
     fun onKeyPress(event: InputEvents.Keypress) {
-        println("event")
+        // println("event")
         this.bindings.forEach { binding ->
             val key = LWJGLKey.fromIndex(event.key)
             if (event.isPressed) {

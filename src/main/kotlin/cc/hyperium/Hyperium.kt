@@ -1,6 +1,7 @@
 package cc.hyperium
 
 import cc.hyperium.network.NetworkManager
+import cc.hyperium.network.packets.Heartbeat
 import cc.hyperium.services.bootstrapServices
 import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.launch
@@ -31,9 +32,12 @@ object Hyperium {
             } catch (e: Exception) {
                 LOGGER.fatal("The connection to the Hyperium Server could not be completed.")
             }
+
+            LOGGER.info("The connection to the Hyperium Server succeeded!")
         }
 
         bootstrapServices(REFLECTIONS)
+        NetworkManager.registerPacket(Heartbeat::class)
 
         // However, by the time we are starting the client, we want to be registered.
         // To confirm that this has happened, we will join the network job thread,

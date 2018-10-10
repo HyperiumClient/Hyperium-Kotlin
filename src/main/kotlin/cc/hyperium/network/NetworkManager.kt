@@ -47,6 +47,7 @@ object NetworkManager {
     fun sendPacket(packet: IPacket) {
         if (!client.isConnected) return
 
+        println(packet)
         client.sendTCP(packet)
     }
 
