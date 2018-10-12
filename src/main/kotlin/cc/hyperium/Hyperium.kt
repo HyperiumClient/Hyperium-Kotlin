@@ -1,7 +1,6 @@
 package cc.hyperium
 
 import cc.hyperium.network.NetworkManager
-import cc.hyperium.network.packets.Heartbeat
 import cc.hyperium.services.bootstrapServices
 import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.launch
@@ -10,7 +9,6 @@ import me.kbrewster.blazeapi.events.InitializationEvent
 import me.kbrewster.config.ConfigFactory
 import me.kbrewster.eventbus.Subscribe
 import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.Logger
 import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
 import org.reflections.scanners.SubTypesScanner
@@ -19,25 +17,28 @@ import org.reflections.scanners.TypeAnnotationsScanner
 object Hyperium {
     val REFLECTIONS = Reflections("cc.hyperium", "com.chattriggers.ctjs", MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
     val config = ConfigFactory.createFileConfig("config-test.json", "json")
-    val LOGGER: Logger = LogManager.getLogger()
+    val LOGGER = LogManager.getLogger()
 
     @Subscribe
     fun onInit(event: InitializationEvent) {
 
         // Start all of the services of the client!
-        // This includes the Client-Server connection, which will be started asynchronously
+
+        // Asynchronously start the network connection.
+        // We're using coroutines here because kotlin has them and they are cool!
         val networkJob = GlobalScope.launch {
             try {
                 NetworkManager.bootstrapClient()
+                LOGGER.info("The connection to the Hyperium Server succeeded!")
             } catch (e: Exception) {
-                LOGGER.fatal("The connection to the Hyperium Server could not be completed.")
+                LOGGER.error("The connection to the Hyperium Server could not be completed.")
             }
-
-            LOGGER.info("The connection to the Hyperium Server succeeded!")
         }
 
+        // Load all of the services provided by the client.
+        // This includes the command system, and other vital
+        // client services.
         bootstrapServices(REFLECTIONS)
-        NetworkManager.registerPacket(Heartbeat::class)
 
         // However, by the time we are starting the client, we want to be registered.
         // To confirm that this has happened, we will join the network job thread,

@@ -1,6 +1,7 @@
 package cc.hyperium.services.commands
 
 import cc.hyperium.network.NetworkManager
+import cc.hyperium.network.packets.CrossClientData
 import cc.hyperium.network.packets.Packets
 import cc.hyperium.services.commands.api.Command
 import cc.hyperium.services.commands.api.Greedy
@@ -8,9 +9,18 @@ import cc.hyperium.services.commands.api.Quotable
 import java.util.*
 
 object CmdTest {
-    @Command("heartbeat")
-    fun heartbeat() {
-        NetworkManager.sendPacket(Packets.HEARTBEAT.instance())
+    @Command("packet")
+    fun heartbeat(type: Optional<String>) {
+        if (!type.isPresent) {
+            NetworkManager.sendPacket(Packets.HEARTBEAT.newInstance())
+            println("Sent packet!")
+            return
+        }
+
+        when (type.get()) {
+            "data" -> NetworkManager.sendPacket(CrossClientData("LUL!"))
+        }
+
         println("Sent packet!")
     }
 

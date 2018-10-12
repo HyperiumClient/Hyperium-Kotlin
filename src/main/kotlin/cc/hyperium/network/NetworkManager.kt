@@ -1,11 +1,11 @@
 package cc.hyperium.network
 
 import cc.hyperium.network.packets.IPacket
+import cc.hyperium.network.packets.Packets
 import com.esotericsoftware.kryonet.Client
 import com.esotericsoftware.kryonet.Connection
 import com.esotericsoftware.kryonet.Listener
 import java.net.SocketTimeoutException
-import kotlin.reflect.KClass
 
 object NetworkManager {
     private const val HOST = "localhost"
@@ -26,6 +26,10 @@ object NetworkManager {
         client = Client()
         client.start()
         client.connect(5000, HOST, PORT)
+
+        Packets.forEach {
+            registerPacket(it)
+        }
     }
 
     /**
@@ -34,8 +38,8 @@ object NetworkManager {
      * This function MUST be called before trying to use the
      * [sendPacket] function or else errors will be raised.
      */
-    fun registerPacket(packet: KClass<out IPacket>) {
-        client.kryo.register(packet.java)
+    fun registerPacket(packet: Class<*>) {
+        client.kryo.register(packet)
     }
 
     /**

@@ -60,6 +60,7 @@ dependencies {
 
     compile 'com.github.FalseHonesty:reflections:855f40b80b'
     compile 'com.github.FalseHonesty:kryonet:2.22'
+    compile "com.github.FalseHonesty:Hyperium-Networking:66a8dba092"
 }
 
 kotlin {
