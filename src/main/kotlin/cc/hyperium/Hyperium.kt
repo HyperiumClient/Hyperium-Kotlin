@@ -53,7 +53,7 @@ object Hyperium {
         // Which will block until the operation is complete, or if it already has,
         // it will return immediately. We do need to wrap the call to join in another
         // coroutine scope however, as the join method is marked with 'suspend.'
-        // the runBlocking call simply merges the divide between blocking code and coroutines.
+        // The runBlocking call simply merges the divide between blocking code and coroutines.
         runBlocking {
             networkJob.join()
         }
