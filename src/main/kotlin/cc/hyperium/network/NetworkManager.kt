@@ -8,6 +8,7 @@ import com.esotericsoftware.kryonet.Listener
 import java.net.SocketTimeoutException
 
 object NetworkManager {
+
     private const val HOST = "localhost"
     private const val PORT = 9001
 

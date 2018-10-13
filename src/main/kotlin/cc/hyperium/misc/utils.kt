@@ -30,6 +30,7 @@ fun map(x: Float, in_min: Float, in_max: Float, out_min: Float, out_max: Float):
 }
 
 private var cachedSR: ScaledResolution = ScaledResolution(mc)
+
 val scaledRes: ScaledResolution
     get() = cachedSR
 

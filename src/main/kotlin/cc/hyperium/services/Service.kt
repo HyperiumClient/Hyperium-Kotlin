@@ -15,9 +15,11 @@ fun bootstrapServices(ref: Reflections) {
         return null
     }
 
-    ref.getTypesAnnotatedWith(Service::class.java).asSequence().map {
-        it.kotlin.objectInstance as? IService ?: onError(it.name)
-    }.filterNotNull().forEach(IService::initialize)
+    Hyperium.RUNNING_SERVICES += ref.getTypesAnnotatedWith(Service::class.java)
+            .asSequence()
+            .map { it.kotlin.objectInstance as? IService ?: onError(it.name) }
+            .filterNotNull()
+            .toList()
 }
 
 /**
@@ -31,6 +33,8 @@ annotation class Service
 
 interface IService {
     fun initialize()
+
+    fun destroy(): Boolean
 }
 
 /**
@@ -40,7 +44,9 @@ interface IService {
  * By extending this class you get access to kotlin's coroutines.
  */
 abstract class AbstractService : IService, CoroutineScope {
+
     override var coroutineContext: CoroutineContext = Dispatchers.Default
+
     val LOGGER = LogManager.getLogger()
 
     override fun initialize() {

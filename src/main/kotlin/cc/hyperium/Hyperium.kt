@@ -1,6 +1,7 @@
 package cc.hyperium
 
 import cc.hyperium.network.NetworkManager
+import cc.hyperium.services.ServiceFactory
 import cc.hyperium.services.bootstrapServices
 import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.launch
@@ -9,15 +10,22 @@ import me.kbrewster.blazeapi.events.InitializationEvent
 import me.kbrewster.config.ConfigFactory
 import me.kbrewster.eventbus.Subscribe
 import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
 import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
 import org.reflections.scanners.SubTypesScanner
 import org.reflections.scanners.TypeAnnotationsScanner
+import java.lang.Exception
 
 object Hyperium {
+
+    val LOGGER: Logger = LogManager.getLogger()
+
     val REFLECTIONS = Reflections("cc.hyperium", "com.chattriggers.ctjs", MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
+
+    val RUNNING_SERVICES = ServiceFactory()
+
     val config = ConfigFactory.createFileConfig("config-test.json", "json")
-    val LOGGER = LogManager.getLogger()
 
     @Subscribe
     fun onInit(event: InitializationEvent) {
@@ -50,4 +58,5 @@ object Hyperium {
             networkJob.join()
         }
     }
+
 }
