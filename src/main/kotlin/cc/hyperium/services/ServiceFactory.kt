@@ -1,5 +1,9 @@
 package cc.hyperium.services
 
+import cc.hyperium.Hyperium
+import net.minecraft.client.resources.I18n
+import org.reflections.Reflections
+
 class ServiceFactory {
 
     private val services = ArrayList<IService>()
@@ -16,6 +20,18 @@ class ServiceFactory {
         this.services.addAll(services)
     }
 
+    fun bootstrapServices(ref: Reflections) {
+        fun onError(serviceName: String): IService? {
+            Hyperium.LOGGER.error(I18n.format("error.loading.service", serviceName))
+            return null
+        }
+
+        this += ref.getTypesAnnotatedWith(Service::class.java)
+                .asSequence()
+                .map { it.kotlin.objectInstance as? IService ?: onError(it.name) }
+                .filterNotNull()
+                .toList()
+    }
 
     fun shutdownServices() {
         this.services.removeAll { service ->

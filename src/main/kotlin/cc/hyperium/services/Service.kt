@@ -1,26 +1,11 @@
 package cc.hyperium.services
 
-import cc.hyperium.Hyperium
 import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.Job
 import me.kbrewster.blazeapi.EVENT_BUS
-import net.minecraft.client.resources.I18n
 import org.apache.logging.log4j.LogManager
-import org.reflections.Reflections
 import kotlin.coroutines.experimental.CoroutineContext
-
-fun bootstrapServices(ref: Reflections) {
-    fun onError(serviceName: String): IService? {
-        Hyperium.LOGGER.error(I18n.format("error.loading.service", serviceName))
-        return null
-    }
-
-    Hyperium.RUNNING_SERVICES += ref.getTypesAnnotatedWith(Service::class.java)
-            .asSequence()
-            .map { it.kotlin.objectInstance as? IService ?: onError(it.name) }
-            .filterNotNull()
-            .toList()
-}
 
 /**
  * Indicates that this Service should be loaded at startup.
@@ -32,8 +17,26 @@ fun bootstrapServices(ref: Reflections) {
 annotation class Service
 
 interface IService {
+    /**
+     * Called when this function is booting up.
+     * Here you should bootstrap everything being used
+     * by this service.
+     */
     fun initialize()
 
+    /**
+     * This function is called at the end of this service's lifecycle.
+     * This is where you should close anything being used by this service,
+     * and prepare for shutdown.
+     *
+     * If this function returns true, then the service has been destroyed correctly,
+     * and will be removed. If it returns false, then the service has failed to destroy,
+     * and will not be removed.
+     *
+     * Keep in mind that this is not necessarily the end of the game.
+     * Services should be able to shutdown and reboot throughout
+     * the duration of the game without any issues.
+     */
     fun destroy(): Boolean
 }
 
@@ -44,12 +47,20 @@ interface IService {
  * By extending this class you get access to kotlin's coroutines.
  */
 abstract class AbstractService : IService, CoroutineScope {
-
-    override var coroutineContext: CoroutineContext = Dispatchers.Default
+    lateinit var job: Job
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Default + job
 
     val LOGGER = LogManager.getLogger()
 
     override fun initialize() {
         EVENT_BUS.register(this)
+        job = Job()
+    }
+
+    override fun destroy(): Boolean {
+        job.cancel()
+
+        return true
     }
 }

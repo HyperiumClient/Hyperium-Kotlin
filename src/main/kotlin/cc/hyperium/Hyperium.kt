@@ -2,7 +2,6 @@ package cc.hyperium
 
 import cc.hyperium.network.NetworkManager
 import cc.hyperium.services.ServiceFactory
-import cc.hyperium.services.bootstrapServices
 import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
@@ -15,7 +14,6 @@ import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
 import org.reflections.scanners.SubTypesScanner
 import org.reflections.scanners.TypeAnnotationsScanner
-import java.lang.Exception
 
 object Hyperium {
 
@@ -46,7 +44,7 @@ object Hyperium {
         // Load all of the services provided by the client.
         // This includes the command system, and other vital
         // client services.
-        bootstrapServices(REFLECTIONS)
+        RUNNING_SERVICES.bootstrapServices(REFLECTIONS)
 
         // However, by the time we are starting the client, we want to be registered.
         // To confirm that this has happened, we will join the network job thread,
