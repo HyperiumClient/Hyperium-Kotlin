@@ -54,13 +54,12 @@ abstract class AbstractService : IService, CoroutineScope {
     val LOGGER = LogManager.getLogger()
 
     override fun initialize() {
+        this.job = Job()
         EVENT_BUS.register(this)
-        job = Job()
     }
 
     override fun destroy(): Boolean {
-        job.cancel()
-
+        this.job.cancel()
         return true
     }
 }

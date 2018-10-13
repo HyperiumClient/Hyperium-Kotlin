@@ -14,6 +14,10 @@ object UtilService : AbstractService() {
     }
 }
 
+/**
+ * TODO: move out into a more sensible place
+ */
+
 fun clamp(number: Float, min: Float, max: Float): Float {
     return if (number < min) min else if (number > max) max else number
 }

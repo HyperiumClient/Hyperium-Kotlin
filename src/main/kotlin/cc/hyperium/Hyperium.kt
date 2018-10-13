@@ -6,6 +6,7 @@ import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
 import me.kbrewster.blazeapi.events.InitializationEvent
+import me.kbrewster.blazeapi.events.ShutdownEvent
 import me.kbrewster.config.ConfigFactory
 import me.kbrewster.eventbus.Subscribe
 import org.apache.logging.log4j.LogManager
@@ -27,7 +28,8 @@ object Hyperium {
 
     @Subscribe
     fun onInit(event: InitializationEvent) {
-
+        LOGGER.info("Starting Hyperium....")
+        this.config.load()
         // Start all of the services of the client!
 
         // Asynchronously start the network connection.
@@ -44,7 +46,7 @@ object Hyperium {
         // Load all of the services provided by the client.
         // This includes the command system, and other vital
         // client services.
-        RUNNING_SERVICES.bootstrapServices(REFLECTIONS)
+        RUNNING_SERVICES.bootstrap(REFLECTIONS)
 
         // However, by the time we are starting the client, we want to be registered.
         // To confirm that this has happened, we will join the network job thread,
@@ -55,6 +57,12 @@ object Hyperium {
         runBlocking {
             networkJob.join()
         }
+    }
+
+    @Subscribe
+    fun onShutdown(event: ShutdownEvent) {
+        LOGGER.info("Shutting down Hyperium...")
+        this.config.save()
     }
 
 }

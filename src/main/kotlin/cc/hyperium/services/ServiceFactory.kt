@@ -8,19 +8,13 @@ class ServiceFactory {
 
     private val services = ArrayList<IService>()
 
-    @JvmName("addService")
-    operator fun plusAssign(service: IService) {
-        service.initialize()
-        this.services.add(service)
-    }
+    private var initialised = false
 
-    @JvmName("addServices")
-    operator fun plusAssign(services: List<IService>) {
-        services.forEach(IService::initialize)
-        this.services.addAll(services)
-    }
+    fun bootstrap(ref: Reflections) {
+        if (!this.initialised) {
+            throw Error("ServiceFactory has already been initialised!")
+        }
 
-    fun bootstrapServices(ref: Reflections) {
         fun onError(serviceName: String): IService? {
             Hyperium.LOGGER.error(I18n.format("error.loading.service", serviceName))
             return null
@@ -31,6 +25,19 @@ class ServiceFactory {
                 .map { it.kotlin.objectInstance as? IService ?: onError(it.name) }
                 .filterNotNull()
                 .toList()
+        this.initialised = true
+    }
+
+    @JvmName("addService")
+    operator fun plusAssign(service: IService) {
+        service.initialize()
+        this.services.add(service)
+    }
+
+    @JvmName("addServices")
+    operator fun plusAssign(services: List<IService>) {
+        services.forEach(IService::initialize)
+        this.services.addAll(services)
     }
 
     fun shutdownServices() {
