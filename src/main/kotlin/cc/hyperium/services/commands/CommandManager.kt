@@ -1,11 +1,11 @@
 package cc.hyperium.services.commands
 
+import cc.hyperium.services.AbstractService
+import cc.hyperium.services.Service
 import cc.hyperium.services.commands.api.ICommand
 import cc.hyperium.services.commands.engine.AnnotationCommandLoader
 import cc.hyperium.services.commands.engine.CommandData
 import cc.hyperium.services.commands.engine.CommandParser
-import cc.hyperium.services.AbstractService
-import cc.hyperium.services.Service
 import me.kbrewster.blazeapi.events.ChatSentEvent
 import me.kbrewster.eventbus.Subscribe
 
@@ -52,6 +52,12 @@ object CommandManager : AbstractService() {
         CommandParser.parseAndCallFunction(split.drop(1), commandData)
 
         return true
+    }
+
+    fun regiserCommandClass(instance: Any) {
+        commandLoaders.forEach {
+            commands.addAll(it.loadCommands(instance))
+        }
     }
 
     private fun loadCommands() {

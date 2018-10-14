@@ -41,8 +41,8 @@ interface IService {
 }
 
 /**
- * Provides a base implementation of [IService] as well as [CoroutineScope], as well as registers
- * the services on the event bus.
+ * Provides a base implementation of [IService] and [CoroutineScope],
+ * and also registers the service on the event bus.
  *
  * By extending this class you get access to kotlin's coroutines.
  */
