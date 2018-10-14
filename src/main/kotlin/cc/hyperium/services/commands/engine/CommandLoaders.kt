@@ -14,18 +14,26 @@ val ref = Hyperium.REFLECTIONS
 
 interface CommandLoader {
     fun loadCommands(): List<CommandData>
+
+    fun loadCommands(instance: Any): List<CommandData>
 }
 
 object AnnotationCommandLoader : CommandLoader {
     override fun loadCommands(): List<CommandData> {
         return ref.getMethodsAnnotatedWith(Command::class.java).asSequence().map {
             it.kotlinFunction!!
-        }.map(::mapToData).filterNotNull().toList()
+        }.map { mapToData(it) }.filterNotNull().toList()
     }
 
-    private fun mapToData(it: KFunction<*>): CommandData? {
+    override fun loadCommands(instance: Any): List<CommandData> {
+        return ref.getMethodsAnnotatedWith(Command::class.java).asSequence().map {
+            it.kotlinFunction!!
+        }.map { mapToData(it, instance) }.filterNotNull().toList()
+    }
+
+    private fun mapToData(it: KFunction<*>, instance: Any? = null): CommandData? {
         val kotlinClass = it.javaMethod!!.declaringClass.kotlin
-        val inst = kotlinClass.objectInstance ?: kotlinClass.companionObjectInstance ?: return null
+        val inst = instance ?: kotlinClass.objectInstance ?: kotlinClass.companionObjectInstance ?: return null
         val cmd = it.findAnnotation<Command>()!!
         val usage = inst::class.memberFunctions.firstOrNull { inner ->
             inner.name == cmd.usage

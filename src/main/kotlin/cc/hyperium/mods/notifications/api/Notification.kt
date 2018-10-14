@@ -1,4 +1,4 @@
-package cc.hyperium.services.notifications.api
+package cc.hyperium.mods.notifications.api
 
 import cc.hyperium.misc.*
 import me.kbrewster.blazeapi.client.fontRenderer

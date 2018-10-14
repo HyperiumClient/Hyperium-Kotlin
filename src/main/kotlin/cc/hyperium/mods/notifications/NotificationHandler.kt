@@ -1,27 +1,21 @@
-package cc.hyperium.services.notifications
+package cc.hyperium.mods.notifications
 
-import cc.hyperium.misc.mouseX
-import cc.hyperium.misc.mouseY
-import cc.hyperium.services.AbstractService
-import cc.hyperium.services.Service
+import cc.hyperium.mods.notifications.api.Notification
+import cc.hyperium.mods.notifications.api.NotificationData
 import cc.hyperium.services.commands.api.Command
-import cc.hyperium.services.commands.api.Greedy
 import cc.hyperium.services.commands.api.Quotable
-import cc.hyperium.services.notifications.api.Notification
-import cc.hyperium.services.notifications.api.NotificationData
-import me.kbrewster.blazeapi.client.mc
+import cc.hyperium.services.mods.AbstractMod
 import me.kbrewster.blazeapi.events.ClientTickEvent
 import me.kbrewster.blazeapi.events.RenderEvent
 import me.kbrewster.eventbus.Subscribe
 import net.minecraft.client.Minecraft
 import java.util.*
 
-@Service
-object NotificationHandler : AbstractService() {
+class NotificationHandler : AbstractMod() {
     private val notifications: Queue<Notification> = LinkedList()
     private var currentNotif: Notification? = null
     private var sysTime: Long = Minecraft.getSystemTime()
-    private const val FPS = 60L
+    private val FPS = 60L
 
     @Command("addNotif")
     fun notifCommand(@Quotable title: String) {

@@ -11,8 +11,8 @@ class ServiceFactory {
     private var initialised = false
 
     fun bootstrap(ref: Reflections) {
-        if (!this.initialised) {
-            throw Error("ServiceFactory has already been initialised!")
+        if (this.initialised) {
+            throw IllegalStateException("ServiceFactory has already been initialised!")
         }
 
         fun onError(serviceName: String): IService? {
@@ -25,6 +25,7 @@ class ServiceFactory {
                 .map { it.kotlin.objectInstance as? IService ?: onError(it.name) }
                 .filterNotNull()
                 .toList()
+
         this.initialised = true
     }
 
