@@ -1,5 +1,5 @@
 object Versions {
-    const val kotlin = "1.2.71"
+    const val kotlin = "1.3.0-rc-146"
 
     // Libraries
 
