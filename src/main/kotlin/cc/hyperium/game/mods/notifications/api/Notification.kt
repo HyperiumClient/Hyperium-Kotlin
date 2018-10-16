@@ -1,6 +1,6 @@
-package cc.hyperium.mods.notifications.api
+package cc.hyperium.game.mods.notifications.api
 
-import cc.hyperium.misc.*
+import cc.hyperium.utils.*
 import me.kbrewster.blazeapi.client.fontRenderer
 import net.minecraft.client.gui.Gui
 

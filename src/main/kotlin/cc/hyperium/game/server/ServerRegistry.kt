@@ -1,12 +1,14 @@
 package cc.hyperium.game.server
 
 import cc.hyperium.services.utilities.Register
+import cc.hyperium.utils.Registry
 import me.kbrewster.blazeapi.events.ServerDisconnectEvent
 import me.kbrewster.blazeapi.events.ServerJoinEvent
 import me.kbrewster.eventbus.Subscribe
 
 @Register
-object ServerManager {
+object ServerRegistry : Registry<MinecraftServer>() {
+
     private val servers = mutableListOf<MinecraftServer>()
     private var currentServer: MinecraftServer? = null
 
@@ -15,7 +17,7 @@ object ServerManager {
         servers.find {
             it.addresses.contains(e.ip) && it.port == e.port
         }?.let {
-            currentServer = it
+            this.currentServer = it
             it.onServerJoin()
         }
     }

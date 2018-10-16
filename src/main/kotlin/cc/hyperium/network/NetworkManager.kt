@@ -12,8 +12,7 @@ object NetworkManager {
     private const val HOST = "localhost"
     private const val PORT = 9001
 
-    // Can't be private because of the inline addListener function.
-    lateinit var client: Client
+    private lateinit var client: Client
 
     /**
      * Attempts to connect to the Hyperium Server.
@@ -24,9 +23,9 @@ object NetworkManager {
      */
     @Throws(SocketTimeoutException::class)
     internal fun bootstrapClient() {
-        client = Client()
-        client.start()
-        client.connect(5000, HOST, PORT)
+        this.client = Client()
+        this.client.start()
+        this.client.connect(5000, HOST, PORT)
 
         Packets.forEach {
             registerPacket(it)
@@ -72,6 +71,15 @@ object NetworkManager {
             }
         }
 
-        client.addListener(listenerObj)
+        this.addListener(listenerObj)
     }
+
+    fun addListener(listener: Listener) {
+        this.client.addListener(listener)
+    }
+
+    fun removeListener(listener: Listener) {
+        this.client.removeListener(listener)
+    }
+
 }

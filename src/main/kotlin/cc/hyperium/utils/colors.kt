@@ -1,4 +1,4 @@
-package cc.hyperium.misc
+package cc.hyperium.utils
 
 import java.awt.Color
 

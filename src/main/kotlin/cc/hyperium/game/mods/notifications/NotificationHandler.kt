@@ -1,7 +1,7 @@
-package cc.hyperium.mods.notifications
+package cc.hyperium.game.mods.notifications
 
-import cc.hyperium.mods.notifications.api.Notification
-import cc.hyperium.mods.notifications.api.NotificationData
+import cc.hyperium.game.mods.notifications.api.Notification
+import cc.hyperium.game.mods.notifications.api.NotificationData
 import cc.hyperium.services.commands.api.Command
 import cc.hyperium.services.commands.api.Quotable
 import cc.hyperium.services.mods.AbstractMod

@@ -1,7 +1,7 @@
 package cc.hyperium
 
 import cc.hyperium.network.NetworkManager
-import cc.hyperium.services.ServiceFactory
+import cc.hyperium.services.ServiceRegistry
 import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
@@ -21,7 +21,7 @@ object Hyperium {
 
     val REFLECTIONS = Reflections("cc.hyperium", "com.chattriggers.ctjs", MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
 
-    val RUNNING_SERVICES = ServiceFactory()
+    val RUNNING_SERVICES = ServiceRegistry()
 
     val config = ConfigFactory.createFileConfig("config-test.json", "json")
 

@@ -1,18 +1,17 @@
 package cc.hyperium.services
 
 import cc.hyperium.Hyperium
+import cc.hyperium.utils.Registry
 import net.minecraft.client.resources.I18n
 import org.reflections.Reflections
 
-class ServiceFactory {
-
-    private val services = ArrayList<IService>()
+class ServiceRegistry : Registry<IService>() {
 
     private var initialised = false
 
     fun bootstrap(ref: Reflections) {
         if (this.initialised) {
-            throw IllegalStateException("ServiceFactory has already been initialised!")
+            throw IllegalStateException("ServiceRegistry has already been initialised!")
         }
 
         fun onError(serviceName: String): IService? {
@@ -29,26 +28,21 @@ class ServiceFactory {
         this.initialised = true
     }
 
-    @JvmName("addService")
-    operator fun plusAssign(service: IService) {
-        service.initialize()
-        this.services.add(service)
+    override fun add(element: IService): Boolean {
+        element.initialize()
+        return super.add(element)
     }
 
-    @JvmName("addServices")
-    operator fun plusAssign(services: List<IService>) {
-        services.forEach(IService::initialize)
-        this.services.addAll(services)
+    override fun addAll(elements: Collection<IService>): Boolean {
+        elements.forEach(IService::initialize)
+        return super.addAll(elements)
     }
+
 
     fun shutdownServices() {
-        this.services.removeAll { service ->
+        this.removeAll { service ->
             service.destroy()
         }
-    }
-
-    fun getServices(): ArrayList<IService> {
-        return this.services
     }
 
 }

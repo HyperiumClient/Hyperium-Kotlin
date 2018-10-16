@@ -1,4 +1,4 @@
-package cc.hyperium.mods.notifications.api
+package cc.hyperium.game.mods.notifications.api
 
 import java.awt.Color
 
