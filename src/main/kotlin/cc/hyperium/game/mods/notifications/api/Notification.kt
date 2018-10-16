@@ -9,7 +9,7 @@ class Notification(private val data: NotificationData) : Gui() {
     var increasing: Boolean = true
     var complete: Boolean = false
     val facadePercent: Float
-        get() = map(percentComplete, 0f, 0.6f, 0f, 1f)
+        get() = percentComplete.map(0f, 0.6f, 0f, 1f)
 
     fun render() {
         draw()
@@ -44,14 +44,10 @@ class Notification(private val data: NotificationData) : Gui() {
     }
 
     private fun tick() {
-        this.percentComplete = clamp(
-                easeOut(
-                        percentComplete,
-                        if (increasing) 1f else 0f,
-                        0.01f,
-                        16f
-                ), 0f, 1f
-        )
+        this.percentComplete = percentComplete.easeOut(
+                if (increasing) 1f else 0f,
+                0.01f, 16f
+        ).clamp(0f, 1f)
 
         if (percentComplete == 1f && increasing) {
             increasing = false
