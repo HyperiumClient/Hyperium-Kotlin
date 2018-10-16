@@ -1,18 +1,29 @@
-*.iml
+### Kotlin
+
+*.class
+*.log
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+
+### Gradle
+
+.gradle
 build/
-.gradle/
-out/
-run/
-src/api/
-src/test/
+!gradle-wrapper.jar
+
+### JetBrains
+
 .idea/
-gradle/
-gradlew
-src/main/java/cc/hyperium/addons/sidebar/versions/UpdateChecker.java
-.mixin.out
-crash-reports
-saves
-resourcepacks
-logs
-options.txt
-usercache.json
+*.iml
+*.iws
+*ipr
+out/
+classes/
+
+### ForgeGradle
+minecraft/
