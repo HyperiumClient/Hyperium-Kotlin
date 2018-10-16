@@ -7,4 +7,11 @@ object Versions {
     const val reflections = "855f40b80b"
     const val kryonet = "2.22"
     const val hyperiumNetworking = "66a8dba092"
+
+    const val kotlinx_coroutines = "0.30.2-eap13"
+
+    // Plugins
+
+    const val forge_gradle = "2.2-SNAPSHOT"
+    const val mixin_gradle = "0.5-SNAPSHOT"
 }

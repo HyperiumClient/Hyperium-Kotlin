@@ -2,9 +2,9 @@ package cc.hyperium
 
 import cc.hyperium.network.NetworkManager
 import cc.hyperium.services.ServiceRegistry
-import kotlinx.coroutines.experimental.GlobalScope
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import me.kbrewster.blazeapi.events.InitializationEvent
 import me.kbrewster.blazeapi.events.ShutdownEvent
 import me.kbrewster.config.ConfigFactory
