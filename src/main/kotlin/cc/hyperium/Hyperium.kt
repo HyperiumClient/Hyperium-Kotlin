@@ -68,5 +68,4 @@ object Hyperium {
         LOGGER.info("Shutting down Hyperium...")
         //this.config.save()
     }
-
 }
