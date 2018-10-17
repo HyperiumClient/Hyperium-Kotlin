@@ -5,8 +5,8 @@ import org.spongepowered.asm.gradle.plugins.MixinGradlePlugin
 
 buildscript {
     repositories {
-        maven { setUrl("http://files.minecraftforge.net/maven") }
-        maven { setUrl("http://repo.spongepowered.org/maven") }
+        maven(url = "http://files.minecraftforge.net/maven")
+        maven(url = "http://repo.spongepowered.org/maven")
     }
 
     dependencies {
@@ -49,12 +49,9 @@ configure<TweakerExtension> {
 }
 
 repositories {
-    maven { setUrl("http://dl.bintray.com/kotlin/kotlin-eap") }
-    maven { setUrl("https://jitpack.io") }
-    maven {
-        name = "sponge"
-        setUrl("https://repo.spongepowered.org/maven/")
-    }
+    maven(url = "http://dl.bintray.com/kotlin/kotlin-eap")
+    maven(url = "https://jitpack.io")
+    maven(url = "https://repo.spongepowered.org/maven/")
     mavenCentral()
     jcenter()
 }
