@@ -1,11 +1,11 @@
 package cc.hyperium.services
 
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import me.kbrewster.blazeapi.EVENT_BUS
 import org.apache.logging.log4j.LogManager
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Indicates that this Service should be loaded at startup.

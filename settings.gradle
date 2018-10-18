@@ -15,5 +15,12 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+pluginManagement {
+    repositories {
+        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap' }
+        mavenCentral()
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+}
 
 rootProject.name = 'HyperiumKotlin'
