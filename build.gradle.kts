@@ -42,7 +42,7 @@ configure<TweakerExtension> {
     version = "1.8.9"
     mappings = "stable_22"
 
-    runDir = rootProject.file("minecraft").path
+    runDir = rootProject.file("run").path
 
     makeObfSourceJar = true
     setTweakClass("cc.hyperium.launch.HyperiumTweaker")
