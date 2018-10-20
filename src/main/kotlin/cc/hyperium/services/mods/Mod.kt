@@ -17,13 +17,13 @@ interface Mod {
     fun destroy()
 }
 
-abstract class AbstractMod : Mod {
-    val LOGGER: Logger = LogManager.getLogger()
+abstract class AbstractMod(val register: Boolean = true) : Mod {
+    private val LOGGER: Logger = LogManager.getLogger()
 
     override fun initialize() {
         LOGGER.info("Initializing Mod ${this::class.simpleName}")
-        EVENT_BUS.register(this)
-        CommandManager.regiserCommandClass(this)
+        if (register) EVENT_BUS.register(this)
+        CommandManager.registerCommandClass(this)
     }
 
     override fun destroy() {

@@ -54,7 +54,7 @@ object CommandManager : AbstractService() {
         return true
     }
 
-    fun regiserCommandClass(instance: Any) {
+    fun registerCommandClass(instance: Any) {
         commandLoaders.forEach {
             commands.addAll(it.loadCommands(instance))
         }

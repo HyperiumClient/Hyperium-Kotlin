@@ -51,7 +51,7 @@ abstract class AbstractService : IService, CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default + job
 
-    val LOGGER = LogManager.getLogger()
+    private val LOGGER = LogManager.getLogger()
 
     override fun initialize() {
         this.job = Job()
