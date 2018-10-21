@@ -14,8 +14,4 @@ open class Registry<T> : ArrayList<T>() {
         this.remove(obj)
     }
 
-    fun getRegistry(): List<T> {
-        return this
-    }
-
 }

@@ -47,7 +47,9 @@ interface IService {
  * By extending this class you get access to kotlin's coroutines.
  */
 abstract class AbstractService : IService, CoroutineScope {
+
     lateinit var job: Job
+
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default + job
 

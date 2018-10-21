@@ -14,15 +14,12 @@ object ServerRegistry : Registry<MinecraftServer>() {
 
     @Subscribe
     fun joinServer(e: ServerJoinEvent) {
-        servers.find {
-            it.addresses.contains(e.ip) && it.port == e.port
-        }?.let {
-            this.currentServer = it
-            it.onServerJoin()
-        }
+        this.currentServer = servers.find { it.addresses.contains(e.ip) && it.port == e.port }
+        this.currentServer?.onServerJoin()
     }
 
+    @Subscribe
     fun leaveServer(e: ServerDisconnectEvent) {
-        currentServer?.onServerLeave()
+        this.currentServer?.onServerLeave()
     }
 }
