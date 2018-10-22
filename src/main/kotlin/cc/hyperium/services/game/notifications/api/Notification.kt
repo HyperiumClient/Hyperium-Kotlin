@@ -1,4 +1,4 @@
-package cc.hyperium.game.mods.notifications.api
+package cc.hyperium.services.game.notifications.api
 
 import cc.hyperium.utils.*
 import me.kbrewster.blazeapi.client.fontRenderer
@@ -69,10 +69,10 @@ class Notification(private val data: NotificationData) : Gui() {
     }
 
     private fun getBorder() = object {
-        val x1 = scaledRes.scaledWidth - (WIDTH * facadePercent).toInt()
-        val y1 = scaledRes.scaledHeight - HEIGHT - BOTTOM_MARGINS
-        val x2 = scaledRes.scaledWidth
-        val y2 = scaledRes.scaledHeight - BOTTOM_MARGINS
+        val x1 = scaledResolution.scaledWidth - (WIDTH * facadePercent).toInt()
+        val y1 = scaledResolution.scaledHeight - HEIGHT - BOTTOM_MARGINS
+        val x2 = scaledResolution.scaledWidth
+        val y2 = scaledResolution.scaledHeight - BOTTOM_MARGINS
     }
 
     companion object {

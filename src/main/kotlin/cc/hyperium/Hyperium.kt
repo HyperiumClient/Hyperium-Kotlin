@@ -1,6 +1,5 @@
 package cc.hyperium
 
-import cc.hyperium.game.server.hypixel.Hypixel
 import cc.hyperium.network.NetworkManager
 import cc.hyperium.services.ServiceRegistry
 import kotlinx.coroutines.GlobalScope
@@ -18,6 +17,7 @@ import org.reflections.scanners.SubTypesScanner
 import org.reflections.scanners.TypeAnnotationsScanner
 
 object Hyperium {
+
     val LOGGER: Logger = LogManager.getLogger()
 
     val REFLECTIONS = Reflections("cc.hyperium", "com.chattriggers.ctjs", MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
@@ -43,12 +43,6 @@ object Hyperium {
             }
         }
 
-        // First off, load the config. It will be used by almost everything
-        // in the client, so it seems like a good thing to load immediately.
-        //TODO: fuck you bitch from kevin <3
-        //this.config.load()
-
-        this.config.addConfig(Hypixel())
 
         // Load all of the services provided by the client.
         // This includes the command system, and other vital

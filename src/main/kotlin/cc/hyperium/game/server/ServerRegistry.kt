@@ -1,12 +1,12 @@
 package cc.hyperium.game.server
 
-import cc.hyperium.services.utilities.Register
+import cc.hyperium.services.utilities.RegisterEvents
 import cc.hyperium.utils.Registry
 import me.kbrewster.blazeapi.events.ServerDisconnectEvent
 import me.kbrewster.blazeapi.events.ServerJoinEvent
 import me.kbrewster.eventbus.Subscribe
 
-@Register
+@RegisterEvents
 object ServerRegistry : Registry<MinecraftServer>() {
 
     private val servers = mutableListOf<MinecraftServer>()

@@ -6,6 +6,7 @@ import cc.hyperium.services.commands.api.ICommand
 import cc.hyperium.services.commands.engine.AnnotationCommandLoader
 import cc.hyperium.services.commands.engine.CommandData
 import cc.hyperium.services.commands.engine.CommandParser
+import me.kbrewster.blazeapi.EVENT_BUS
 import me.kbrewster.blazeapi.events.ChatSentEvent
 import me.kbrewster.eventbus.Subscribe
 
@@ -16,8 +17,13 @@ object CommandManager : AbstractService() {
 
     override fun initialize() {
         super.initialize()
-
         loadCommands()
+        EVENT_BUS.register(this)
+    }
+
+    override fun kill(): Boolean {
+        EVENT_BUS.unregister(this)
+        return super.kill()
     }
 
     fun addCommandFromClass(commandClass: ICommand) {

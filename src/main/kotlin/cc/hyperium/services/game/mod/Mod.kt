@@ -1,23 +1,14 @@
-package cc.hyperium.services.mods
+package cc.hyperium.services.game.mod
 
+import cc.hyperium.services.AbstractService
 import cc.hyperium.services.commands.CommandManager
 import me.kbrewster.blazeapi.EVENT_BUS
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 
-/**
- * Mods, while they seem to be similar to Services, are fundamentally different
- * due to the fact that they actually change the game.
- *
- * Mods must have at least one no-arg constructor so they can be instantiated.
- */
-interface Mod {
-    fun initialize()
 
-    fun destroy()
-}
+open class Mod(val register: Boolean = true) : AbstractService() {
 
-abstract class AbstractMod(val register: Boolean = true) : Mod {
     private val LOGGER: Logger = LogManager.getLogger()
 
     override fun initialize() {
@@ -26,7 +17,8 @@ abstract class AbstractMod(val register: Boolean = true) : Mod {
         CommandManager.registerCommandClass(this)
     }
 
-    override fun destroy() {
+    override fun kill(): Boolean {
         LOGGER.info("Destroying Mod ${this::class.simpleName}")
+        return true
     }
 }
