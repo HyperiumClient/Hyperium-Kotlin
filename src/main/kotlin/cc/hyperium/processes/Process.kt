@@ -1,5 +1,10 @@
 package cc.hyperium.processes
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlin.coroutines.CoroutineContext
+
 /**
  * Basic Process Interface
  *
@@ -8,19 +13,25 @@ package cc.hyperium.processes
  * and if a service gets killed, all the child processes
  * get killed along with it.
  */
-interface Process {
-
+interface Process : CoroutineScope {
     /**
      * List of all the child processes
      */
     val childProcesses: MutableList<Process>
+
+    var job: Job
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Default + job
 
     /**
      * Called when this function is booting up.
      * Here you should bootstrap everything being used
      * by this service.
      */
-    fun initialize() {}
+    fun initialize() {
+        this.job = Job()
+    }
 
     /**
      * This function is called at the end of this processes lifecycle.
@@ -36,6 +47,7 @@ interface Process {
      * the duration of the game without any issues.
      */
     fun kill(): Boolean {
+        this.job.cancel()
         this.childProcesses.forEach { service -> service.kill() }
         return true
     }

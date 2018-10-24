@@ -1,11 +1,11 @@
 package cc.hyperium.processes.services.commands
 
+import cc.hyperium.network.NetworkManager
 import cc.hyperium.network.packets.CrossClientData
 import cc.hyperium.network.packets.Packets
 import cc.hyperium.processes.services.commands.api.Command
 import cc.hyperium.processes.services.commands.api.Greedy
 import cc.hyperium.processes.services.commands.api.Quotable
-import cc.hyperium.processes.services.network.NetworkManager
 import java.util.*
 
 object CmdTest {

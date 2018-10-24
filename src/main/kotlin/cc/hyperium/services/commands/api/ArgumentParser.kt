@@ -1,5 +1,6 @@
 package cc.hyperium.services.commands.api
 
+import cc.hyperium.processes.services.commands.api.ArgumentQueue
 import kotlin.reflect.KParameter
 
 /**

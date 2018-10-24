@@ -1,6 +1,10 @@
 package cc.hyperium.processes.services.commands.engine
 
-import cc.hyperium.processes.services.commands.api.*
+import cc.hyperium.processes.services.commands.api.ArgumentQueue
+import cc.hyperium.processes.services.commands.api.Greedy
+import cc.hyperium.processes.services.commands.api.Quotable
+import cc.hyperium.processes.services.commands.api.Take
+import cc.hyperium.services.commands.api.ArgumentParser
 import kotlin.reflect.KParameter
 
 class IntArgumentParser : ArgumentParser {
