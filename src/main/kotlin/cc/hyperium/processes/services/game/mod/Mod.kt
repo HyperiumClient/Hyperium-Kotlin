@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 
 
-open class Mod(val register: Boolean = true) : Process {
+abstract class Mod(val register: Boolean = true) : Process {
 
     private val LOGGER: Logger = LogManager.getLogger()
 
