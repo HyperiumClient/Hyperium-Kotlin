@@ -8,13 +8,11 @@ import me.kbrewster.eventbus.Subscribe
 
 @Register
 object ServerRegistry : Registry<MinecraftServer>() {
-
-    private val servers = mutableListOf<MinecraftServer>()
     private var currentServer: MinecraftServer? = null
 
     @Subscribe
     fun joinServer(e: ServerJoinEvent) {
-        servers.find {
+        this.find {
             it.addresses.contains(e.ip) && it.port == e.port
         }?.let {
             this.currentServer = it
