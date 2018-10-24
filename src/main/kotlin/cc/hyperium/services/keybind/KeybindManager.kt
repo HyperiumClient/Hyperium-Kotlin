@@ -4,6 +4,7 @@ import cc.hyperium.services.AbstractService
 import cc.hyperium.services.Service
 import me.kbrewster.blazeapi.events.InputEvents
 import me.kbrewster.eventbus.Subscribe
+
 @Service
 object KeybindManager : AbstractService() {
 

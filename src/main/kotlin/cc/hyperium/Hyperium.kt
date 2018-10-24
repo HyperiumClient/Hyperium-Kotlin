@@ -20,7 +20,13 @@ object Hyperium {
 
     val LOGGER: Logger = LogManager.getLogger()
 
-    val REFLECTIONS = Reflections("cc.hyperium", "com.chattriggers.ctjs", MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
+    val REFLECTIONS = Reflections(
+        "cc.hyperium",
+        "com.chattriggers.ctjs",
+        MethodAnnotationsScanner(),
+        TypeAnnotationsScanner(),
+        SubTypesScanner()
+    )
 
     val RUNNING_SERVICES = ServiceRegistry()
 

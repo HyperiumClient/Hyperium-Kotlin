@@ -13,10 +13,10 @@ object ModService : AbstractService() {
 
     override fun initialize() {
         Hyperium.REFLECTIONS.getSubTypesOf(Mod::class.java)
-                .asSequence()
-                .map(this::classToMod)
-                .filterNotNull()
-                .forEach(this::registerMod)
+            .asSequence()
+            .map(this::classToMod)
+            .filterNotNull()
+            .forEach(this::registerMod)
 
         this.subServices.forEach(IService::initialize)
     }

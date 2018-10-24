@@ -7,7 +7,7 @@ import java.util.*
 open class KeyboardKey(val keyName: String, val keyCode: Int)
 
 class LWJGLKey(keyName: String, keyCode: Int) :
-        KeyboardKey(keyName, keyCode) {
+    KeyboardKey(keyName, keyCode) {
 
     companion object {
 

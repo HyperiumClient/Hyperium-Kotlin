@@ -20,10 +20,10 @@ class ServiceRegistry : Registry<IService>() {
         }
 
         this += ref.getTypesAnnotatedWith(Service::class.java)
-                .asSequence()
-                .map { it.kotlin.objectInstance as? IService ?: onError(it.name) }
-                .filterNotNull()
-                .toList()
+            .asSequence()
+            .map { it.kotlin.objectInstance as? IService ?: onError(it.name) }
+            .filterNotNull()
+            .toList()
 
         this.initialised = true
     }
