@@ -17,6 +17,7 @@ import org.reflections.scanners.SubTypesScanner
 import org.reflections.scanners.TypeAnnotationsScanner
 
 object Hyperium {
+
     val LOGGER: Logger = LogManager.getLogger()
 
     val REFLECTIONS = Reflections("cc.hyperium", "com.chattriggers.ctjs", MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
@@ -42,10 +43,6 @@ object Hyperium {
             }
         }
 
-        // First off, load the config. It will be used by almost everything
-        // in the client, so it seems like a good thing to load immediately.
-        //TODO: THIS BE BROKE @KEVIN
-        //this.config.load()
 
         // Load all of the services provided by the client.
         // This includes the command system, and other vital
@@ -66,6 +63,6 @@ object Hyperium {
     @Subscribe
     fun onShutdown(event: ShutdownEvent) {
         LOGGER.info("Shutting down Hyperium...")
-        //this.config.save()
+        this.config.save()
     }
 }

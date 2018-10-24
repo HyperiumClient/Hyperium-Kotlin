@@ -41,7 +41,7 @@ class ServiceRegistry : Registry<IService>() {
 
     fun shutdownServices() {
         this.removeAll { service ->
-            service.destroy()
+            service.kill()
         }
     }
 

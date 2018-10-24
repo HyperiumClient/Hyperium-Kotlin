@@ -27,9 +27,7 @@ object NetworkManager {
         this.client.start()
         this.client.connect(5000, HOST, PORT)
 
-        Packets.forEach {
-            registerPacket(it)
-        }
+        Packets.forEach(::registerPacket)
     }
 
     /**
@@ -39,7 +37,7 @@ object NetworkManager {
      * [sendPacket] function or else errors will be raised.
      */
     fun registerPacket(packet: Class<*>) {
-        client.kryo.register(packet)
+        this.client.kryo.register(packet)
     }
 
     /**
@@ -49,10 +47,8 @@ object NetworkManager {
      * [registerPacket] function beforehand.
      */
     fun sendPacket(packet: IPacket) {
-        if (!client.isConnected) return
-
-        println(packet)
-        client.sendTCP(packet)
+        if (!this.client.isConnected) throw Exception("Client is not connected.")
+        this.client.sendTCP(packet)
     }
 
     /**

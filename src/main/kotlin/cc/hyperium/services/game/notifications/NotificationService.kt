@@ -1,27 +1,30 @@
-package cc.hyperium.game.mods.notifications
+package cc.hyperium.services.game.notifications
 
-import cc.hyperium.game.mods.notifications.api.Notification
-import cc.hyperium.game.mods.notifications.api.NotificationData
-import cc.hyperium.services.commands.api.Command
-import cc.hyperium.services.commands.api.Quotable
-import cc.hyperium.services.mods.AbstractMod
+import cc.hyperium.services.AbstractService
+import cc.hyperium.services.game.notifications.api.Notification
+import cc.hyperium.services.game.notifications.api.NotificationData
+import me.kbrewster.blazeapi.EVENT_BUS
 import me.kbrewster.blazeapi.events.ClientTickEvent
 import me.kbrewster.blazeapi.events.RenderEvent
 import me.kbrewster.eventbus.Subscribe
 import net.minecraft.client.Minecraft
 import java.util.*
 
-class NotificationHandler : AbstractMod() {
+class NotificationService : AbstractService() {
+
     private val notifications: Queue<Notification> = LinkedList()
     private var currentNotif: Notification? = null
     private var sysTime: Long = Minecraft.getSystemTime()
     private val FPS = 60L
 
-    @Command("addNotif")
-    fun notifCommand(@Quotable title: String) {
-        addNotification(NotificationData.Builder()
-                        .title(title)
-                        .build())
+    override fun initialize() {
+        super.initialize()
+        EVENT_BUS.register(this)
+    }
+
+    override fun kill(): Boolean {
+        EVENT_BUS.unregister(this)
+        return super.kill()
     }
 
     @Subscribe
