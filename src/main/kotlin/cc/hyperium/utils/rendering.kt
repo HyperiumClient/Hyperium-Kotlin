@@ -1,6 +1,6 @@
 package cc.hyperium.utils
 
-import cc.hyperium.services.utilities.RegisterEvents
+import cc.hyperium.processes.services.utilities.RegisterEvents
 import me.kbrewster.blazeapi.client.mc
 import me.kbrewster.blazeapi.events.ClientTickEvent
 import me.kbrewster.eventbus.Subscribe

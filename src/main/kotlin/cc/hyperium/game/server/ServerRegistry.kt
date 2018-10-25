@@ -1,6 +1,6 @@
 package cc.hyperium.game.server
 
-import cc.hyperium.services.utilities.RegisterEvents
+import cc.hyperium.processes.services.utilities.RegisterEvents
 import cc.hyperium.utils.Registry
 import me.kbrewster.blazeapi.events.ServerDisconnectEvent
 import me.kbrewster.blazeapi.events.ServerJoinEvent

@@ -1,12 +1,13 @@
 package cc.hyperium.game.mods.hypixel
 
-import cc.hyperium.services.game.mod.Mod
+import cc.hyperium.processes.services.game.mod.Mod
 import me.kbrewster.blazeapi.events.ChatReceivedEvent
 import me.kbrewster.eventbus.Subscribe
 
-class AutoGG : Mod(register = false) {
+object AutoGG : Mod() {
+
     @Subscribe
     fun onChat(event: ChatReceivedEvent) {
-        //
+        // TODO: AutoGG
     }
 }

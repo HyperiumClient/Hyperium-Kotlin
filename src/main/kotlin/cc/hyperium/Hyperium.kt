@@ -1,7 +1,7 @@
 package cc.hyperium
 
 import cc.hyperium.network.NetworkManager
-import cc.hyperium.services.ServiceRegistry
+import cc.hyperium.processes.services.ServiceRegistry
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
