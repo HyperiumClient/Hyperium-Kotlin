@@ -8,18 +8,17 @@ import me.kbrewster.eventbus.Subscribe
 
 @RegisterEvents
 object ServerRegistry : Registry<MinecraftServer>() {
-
-    private val servers = mutableListOf<MinecraftServer>()
     private var currentServer: MinecraftServer? = null
 
     @Subscribe
     fun joinServer(e: ServerJoinEvent) {
-        this.currentServer = servers.find { it.addresses.contains(e.ip) && it.port == e.port }
+        this.currentServer = this.find { it.addresses.contains(e.ip) && it.port == e.port }
         this.currentServer?.onServerJoin()
     }
 
     @Subscribe
     fun leaveServer(e: ServerDisconnectEvent) {
         this.currentServer?.onServerLeave()
+        this.currentServer = null
     }
 }

@@ -35,9 +35,11 @@ object CommandParser {
         } catch (e: Exception) {
             val usage = if (data.usage.parameters.isNotEmpty()) data.usage.call(data.instance) else data.usage.call()
 
-            thePlayer.addChatMessage(ChatComponentText(
+            thePlayer.addChatMessage(
+                ChatComponentText(
                     usage.toString()
-            ))
+                )
+            )
         }
     }
 

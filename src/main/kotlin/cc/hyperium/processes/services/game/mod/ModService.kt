@@ -8,10 +8,10 @@ import cc.hyperium.processes.services.Service
 object ModService : AbstractService() {
     override fun initialize() {
         Hyperium.REFLECTIONS.getSubTypesOf(Mod::class.java)
-                .asSequence()
-                .map(this::classToMod)
-                .filterNotNull()
-                .forEach(this::registerMod)
+            .asSequence()
+            .map(this::classToMod)
+            .filterNotNull()
+            .forEach(this::registerMod)
 
         super.initialize()
     }

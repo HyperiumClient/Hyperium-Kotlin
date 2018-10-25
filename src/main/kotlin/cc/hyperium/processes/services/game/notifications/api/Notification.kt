@@ -28,10 +28,10 @@ class Notification(private val data: NotificationData) : Gui() {
         drawRect(borders.x1, borders.y1, borders.x2, borders.y2, data.backgroundColor.setAlpha(currentAlpha).rgb)
 
         fr.drawString(
-                fr.trimStringToWidth(data.title, WIDTH - RIGHT_MARGINS),
-                borders.x1 + HIGHLIGHT_BAR_MARGINS + HIGHLIGHT_BAR_WIDTH,
-                borders.y1 + TOP_PADDING,
-                white
+            fr.trimStringToWidth(data.title, WIDTH - RIGHT_MARGINS),
+            borders.x1 + HIGHLIGHT_BAR_MARGINS + HIGHLIGHT_BAR_WIDTH,
+            borders.y1 + TOP_PADDING,
+            white
         )
     }
 
@@ -45,8 +45,8 @@ class Notification(private val data: NotificationData) : Gui() {
 
     private fun tick() {
         this.percentComplete = percentComplete.easeOut(
-                if (increasing) 1f else 0f,
-                0.01f, 16f
+            if (increasing) 1f else 0f,
+            0.01f, 16f
         ).clamp(0f, 1f)
 
         if (percentComplete == 1f && increasing) {

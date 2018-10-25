@@ -30,13 +30,15 @@ object CommandManager : AbstractService() {
         val execFun = commandClass::execute
         val usageFun = commandClass::getUsage
 
-        commands.add(CommandData(
+        commands.add(
+            CommandData(
                 commandClass.getName(),
                 execFun.parameters,
                 execFun,
                 usageFun,
                 commandClass
-        ))
+            )
+        )
     }
 
     @Subscribe

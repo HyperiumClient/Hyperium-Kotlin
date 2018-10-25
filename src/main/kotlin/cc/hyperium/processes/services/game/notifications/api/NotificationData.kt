@@ -3,12 +3,13 @@ package cc.hyperium.processes.services.game.notifications.api
 import java.awt.Color
 
 data class NotificationData(
-        val title: String,
-        val description: String,
-        val backgroundColor: Color,
-        val accentColor: Color,
-        val link: String?,
-        val callback: (() -> Unit)?) {
+    val title: String,
+    val description: String,
+    val backgroundColor: Color,
+    val accentColor: Color,
+    val link: String?,
+    val callback: (() -> Unit)?
+) {
 
     class Builder {
         private var title: String = ""

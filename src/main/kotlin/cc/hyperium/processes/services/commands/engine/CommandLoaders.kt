@@ -40,11 +40,11 @@ object AnnotationCommandLoader : CommandLoader {
         } ?: CommandManager::getGenericErrorMessage
 
         return CommandData(
-                cmd.name,
-                it.parameters,
-                it,
-                usage,
-                inst
+            cmd.name,
+            it.parameters,
+            it,
+            usage,
+            inst
         )
     }
 }
