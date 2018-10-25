@@ -31,6 +31,7 @@ interface Process : CoroutineScope {
      */
     fun initialize() {
         this.job = Job()
+        childProcesses.forEach(Process::initialize)
     }
 
     /**
@@ -47,8 +48,8 @@ interface Process : CoroutineScope {
      * the duration of the game without any issues.
      */
     fun kill(): Boolean {
-        this.job.cancel()
         this.childProcesses.forEach { service -> service.kill() }
+        this.job.cancel()
         return true
     }
 }

@@ -1,18 +1,11 @@
 package cc.hyperium.processes.services.game.mod
 
 import cc.hyperium.Hyperium
-import cc.hyperium.processes.Process
 import cc.hyperium.processes.services.AbstractService
 import cc.hyperium.processes.services.Service
 
 @Service
 object ModService : AbstractService() {
-
-    /**
-     * Technically a list of all the mods which are running
-     */
-    override val childProcesses = ArrayList<Process>()
-
     override fun initialize() {
         Hyperium.REFLECTIONS.getSubTypesOf(Mod::class.java)
                 .asSequence()
@@ -20,7 +13,7 @@ object ModService : AbstractService() {
                 .filterNotNull()
                 .forEach(this::registerMod)
 
-        childProcesses.forEach(Process::initialize)
+        super.initialize()
     }
 
     private fun classToMod(clazz: Class<*>): Mod? {
