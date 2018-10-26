@@ -1,12 +1,11 @@
-package cc.hyperium.services.commands.api
+package cc.hyperium.processes.services.commands.api
 
-import cc.hyperium.processes.services.commands.api.ArgumentQueue
 import kotlin.reflect.KParameter
 
 /**
  * Defines how to parse a certain data type using the available command parameters.
  *
- * Register using [cc.hyperium.commands.engine.CommandParser.registerArgumentParser]
+ * Register using [cc.hyperium.processes.services.commands.engine.CommandParser.registerArgumentParser]
  */
 interface ArgumentParser {
     /**
