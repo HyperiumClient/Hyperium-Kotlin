@@ -7,6 +7,7 @@ import cc.hyperium.utils.Success
 import cc.hyperium.utils.Try
 import me.kbrewster.blazeapi.client.mc
 import net.minecraft.util.ChatComponentText
+import org.apache.logging.log4j.LogManager
 import java.util.*
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
@@ -14,6 +15,7 @@ import kotlin.reflect.KParameter
 
 object CommandParser {
     private val argumentParsers = mutableMapOf<KClass<*>, ArgumentParser>()
+    private val LOGGER = LogManager.getLogger()
 
     init {
         registerArgumentParser(Int::class, IntArgumentParser())
@@ -77,7 +79,7 @@ object CommandParser {
         val parser = argumentParsers[type]
 
         if (parser == null) {
-            println("No parser found for type $type.")
+            LOGGER.info("No parser found for type $type.")
             return Failure
         }
 
