@@ -1,15 +1,21 @@
 package cc.hyperium.processes.services.commands.engine
 
+import cc.hyperium.processes.services.commands.api.ArgumentParser
 import cc.hyperium.processes.services.commands.api.ArgumentQueue
-import cc.hyperium.services.commands.api.ArgumentParser
-import me.kbrewster.blazeapi.client.thePlayer
+import cc.hyperium.utils.Failure
+import cc.hyperium.utils.Success
+import cc.hyperium.utils.Try
+import me.kbrewster.blazeapi.client.mc
 import net.minecraft.util.ChatComponentText
+import org.apache.logging.log4j.LogManager
 import java.util.*
 import kotlin.reflect.KClass
+import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
 
 object CommandParser {
     private val argumentParsers = mutableMapOf<KClass<*>, ArgumentParser>()
+    private val LOGGER = LogManager.getLogger()
 
     init {
         registerArgumentParser(Int::class, IntArgumentParser())
@@ -24,51 +30,68 @@ object CommandParser {
 
     fun parseAndCallFunction(command: List<String>, data: CommandData) {
         val queue = ArgumentQueue(LinkedList<String>(command))
-        val paramMap = mutableMapOf<KParameter, Any>()
 
-        try {
-            data.parameters.forEach {
-                paramMap[it] = parseParameter(it, queue, data)
+        val paramMap = data.parameters.associateWith map@{
+            val parsed = parseParameter(it, queue, data)
+
+            return@map parsed.resolve {
+                fail(data.usage, data.instance)
+                return
             }
-
-            data.function.callBy(paramMap)
-        } catch (e: Exception) {
-            val usage = if (data.usage.parameters.isNotEmpty()) data.usage.call(data.instance) else data.usage.call()
-
-            thePlayer.addChatMessage(
-                ChatComponentText(
-                    usage.toString()
-                )
-            )
         }
+
+        data.function.callBy(paramMap)
     }
 
-    private fun parseParameter(param: KParameter, queue: ArgumentQueue, data: CommandData): Any {
+    private fun fail(usageFunction: KFunction<*>, instance: Any) {
+        val usage = if (usageFunction.parameters.isNotEmpty()) usageFunction.call(instance) else usageFunction.call()
+
+        mc.thePlayer.addChatMessage(
+            ChatComponentText(
+                usage.toString()
+            )
+        )
+    }
+
+    private fun parseParameter(param: KParameter, queue: ArgumentQueue, data: CommandData): Try<Any> {
         if (param.kind == KParameter.Kind.INSTANCE) {
-            return data.instance
+            return Success(data.instance)
         }
 
         val type = param.type
-        val clazz = type.classifier as KClass<*>
+        var clazz = type.classifier as KClass<*>
+        val isOptional = clazz == Optional::class
 
-        if (clazz == Optional::class) {
-            val typeClazz = type.arguments[0].type!!.classifier as KClass<*>
-
-            val parsed = getParsedArgument(param, typeClazz, queue)
-            return Optional.ofNullable(parsed)
+        if (isOptional) {
+            clazz = type.arguments[0].type!!.classifier as KClass<*>
         }
 
-        return getParsedArgument(param, clazz, queue)!!
+        val result = getParsedArgument(param, clazz, queue)
+
+        if (isOptional) {
+            return result.force(Optional.empty()) { Optional.of(it) }
+        }
+
+        return result
     }
 
-    private fun getParsedArgument(param: KParameter, type: KClass<*>, queue: ArgumentQueue): Any? {
-        if (!argumentParsers.containsKey(type)) println("NO PARSER FOR TYPE $type")
+    private fun getParsedArgument(param: KParameter, type: KClass<*>, queue: ArgumentQueue): Try<Any> {
+        val parser = argumentParsers[type]
 
-        return try {
-            argumentParsers[type]?.parse(queue, param).also { queue.sync() }
-        } catch (e: Exception) {
-            queue.undo()
-            null
+        if (parser == null) {
+            LOGGER.info("No parser found for type $type.")
+            return Failure
         }
+
+        val result = Try {
+            parser.parse(queue, param)
+        }
+
+        when (result) {
+            is Success -> queue.sync()
+            is Failure -> queue.undo()
+        }
+
+        return result
     }
 }

@@ -12,16 +12,19 @@ object CmdTest {
     @Command("packet")
     fun heartbeat(type: Optional<String>) {
         if (!type.isPresent) {
-            NetworkManager.sendPacket(Packets.HEARTBEAT.newInstance())
-            println("Sent packet!")
+            val res = NetworkManager.sendPacket(Packets.HEARTBEAT.newInstance())
+
+            println(if (res) "Sent packet!" else "Failed to send packet :(")
+
             return
         }
 
-        when (type.get()) {
+        val res = when (type.get()) {
             "data" -> NetworkManager.sendPacket(CrossClientData("LUL!"))
+            else -> false
         }
 
-        println("Sent packet!")
+        println(if (res) "Sent packet!" else "Failed to send packet :(")
     }
 
     @Command("gay")

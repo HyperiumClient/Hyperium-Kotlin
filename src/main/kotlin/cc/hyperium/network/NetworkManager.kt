@@ -45,10 +45,13 @@ object NetworkManager {
      *
      * To send a packet, it must be registered via the
      * [registerPacket] function beforehand.
+     *
+     * @return true if the packet was sent successfully
      */
-    fun sendPacket(packet: IPacket) {
-        if (!this.client.isConnected) throw Exception("Client is not connected.")
-        this.client.sendTCP(packet)
+    fun sendPacket(packet: IPacket): Boolean {
+        if (!this.client.isConnected) return false
+
+        return this.client.sendTCP(packet) != 0
     }
 
     /**

@@ -17,7 +17,6 @@ import org.reflections.scanners.SubTypesScanner
 import org.reflections.scanners.TypeAnnotationsScanner
 
 object Hyperium {
-
     val LOGGER: Logger = LogManager.getLogger()
 
     val REFLECTIONS = Reflections(

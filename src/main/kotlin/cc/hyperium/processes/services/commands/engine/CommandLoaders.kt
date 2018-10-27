@@ -26,9 +26,9 @@ object AnnotationCommandLoader : CommandLoader {
     }
 
     override fun loadCommands(instance: Any): List<CommandData> {
-        return ref.getMethodsAnnotatedWith(Command::class.java).asSequence().map {
-            it.kotlinFunction!!
-        }.map { mapToData(it, instance) }.filterNotNull().toList()
+        return instance::class.memberFunctions
+            .filter { it.findAnnotation<Command>() != null }
+            .map { mapToData(it, instance)!! }
     }
 
     private fun mapToData(it: KFunction<*>, instance: Any? = null): CommandData? {
