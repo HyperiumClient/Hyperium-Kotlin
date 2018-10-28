@@ -7,6 +7,7 @@ object Versions {
     const val reflections = "855f40b80b"
     const val kryonet = "2.22"
     const val hyperiumNetworking = "66a8dba092"
+    const val kodein = "5.3.0"
 
     const val kotlinx_coroutines = "1.0.0-RC1"
 

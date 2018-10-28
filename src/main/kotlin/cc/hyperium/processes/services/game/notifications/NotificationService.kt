@@ -1,6 +1,7 @@
 package cc.hyperium.processes.services.game.notifications
 
 import cc.hyperium.processes.services.AbstractService
+import cc.hyperium.processes.services.Service
 import cc.hyperium.processes.services.game.notifications.api.Notification
 import cc.hyperium.processes.services.game.notifications.api.NotificationData
 import me.kbrewster.blazeapi.EVENT_BUS
@@ -8,9 +9,11 @@ import me.kbrewster.blazeapi.events.ClientTickEvent
 import me.kbrewster.blazeapi.events.RenderEvent
 import me.kbrewster.eventbus.Subscribe
 import net.minecraft.client.Minecraft
+import org.kodein.di.Kodein
 import java.util.*
 
-class NotificationService : AbstractService() {
+@Service
+class NotificationService(override val kodein: Kodein) : AbstractService() {
 
     private val notifications: Queue<Notification> = LinkedList()
     private var currentNotif: Notification? = null

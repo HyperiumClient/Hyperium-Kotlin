@@ -1,6 +1,7 @@
 package cc.hyperium
 
 import cc.hyperium.network.NetworkManager
+import cc.hyperium.processes.services.AbstractService
 import cc.hyperium.processes.services.ServiceRegistry
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -11,6 +12,12 @@ import me.kbrewster.config.ConfigFactory
 import me.kbrewster.eventbus.Subscribe
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import org.kodein.di.Kodein
+import org.kodein.di.bindings.subTypes
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.provider
+import org.kodein.di.generic.singleton
+import org.kodein.di.generic.with
 import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
 import org.reflections.scanners.SubTypesScanner
@@ -31,6 +38,8 @@ object Hyperium {
 
     val config = ConfigFactory.createFileConfig("config-test.json", "json")
 
+    lateinit var kodein: Kodein
+
     @Subscribe
     fun onInit(event: InitializationEvent) {
         LOGGER.info("Starting Hyperium....")
@@ -49,10 +58,15 @@ object Hyperium {
         }
 
 
+        // Set up our Kodein instance
+        // This provides all of the dependencies for injection
+        kodein = constructKodein()
+
+
         // Load all of the services provided by the client.
         // This includes the command system, and other vital
         // client services.
-        RUNNING_SERVICES.bootstrap(REFLECTIONS)
+        RUNNING_SERVICES.bootstrap(REFLECTIONS, kodein)
 
         // However, by the time we are starting the client, we want to be registered.
         // To confirm that this has happened, we will join the network job thread,
@@ -63,6 +77,16 @@ object Hyperium {
         runBlocking {
             networkJob.join()
         }
+    }
+
+    private fun constructKodein() = Kodein {
+        bind<AbstractService>().subTypes() with { type ->
+            provider { RUNNING_SERVICES.getInstanceOfClass(type) }
+        }
+
+        bind<Logger>() with singleton { LOGGER }
+
+        bind<Reflections>() with singleton { REFLECTIONS }
     }
 
     @Subscribe

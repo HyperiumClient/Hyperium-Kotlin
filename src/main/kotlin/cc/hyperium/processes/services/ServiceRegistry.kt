@@ -2,31 +2,39 @@ package cc.hyperium.processes.services
 
 import cc.hyperium.Hyperium
 import cc.hyperium.utils.Registry
+import cc.hyperium.utils.instance
 import net.minecraft.client.resources.I18n
+import org.kodein.di.Kodein
 import org.reflections.Reflections
 
 class ServiceRegistry : Registry<AbstractService>() {
 
     private var initialised = false
 
-    fun bootstrap(ref: Reflections) {
+    fun bootstrap(ref: Reflections, kodein: Kodein) {
         if (this.initialised) {
             throw IllegalStateException("ServiceRegistry has already been initialised!")
         }
 
-        fun onError(serviceName: String): AbstractService? {
-            Hyperium.LOGGER.error(I18n.format("error.loading.service", serviceName))
-            return null
-        }
-
-        this += ref.getTypesAnnotatedWith(Service::class.java)
+        ref.getTypesAnnotatedWith(Service::class.java)
             .asSequence()
-            .map { it.kotlin.objectInstance as? AbstractService ?: onError(it.name) }
-            .filterNotNull()
-            .toList()
+            .sortedByDescending { it.getAnnotation(Service::class.java).priority.ordinal }
+            .forEach {
+                val instance = classToService(it, kodein)
+
+                if (instance != null) this += instance
+            }
 
         this.initialised = true
     }
+
+    private fun classToService(clazz: Class<*>, kodein: Kodein) =
+        try {
+            clazz.instance<AbstractService>(kodein)
+        } catch (e: Exception) {
+            Hyperium.LOGGER.error(I18n.format("error.loading.service", clazz.name), e)
+            null
+        }
 
     override fun add(element: AbstractService): Boolean {
         element.initialize()
@@ -37,7 +45,6 @@ class ServiceRegistry : Registry<AbstractService>() {
         elements.forEach(AbstractService::initialize)
         return super.addAll(elements)
     }
-
 
     fun shutdownServices() {
         this.removeAll(AbstractService::kill)

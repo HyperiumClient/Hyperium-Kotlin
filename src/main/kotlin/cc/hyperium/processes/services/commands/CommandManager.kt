@@ -9,9 +9,10 @@ import cc.hyperium.processes.services.commands.engine.CommandParser
 import me.kbrewster.blazeapi.EVENT_BUS
 import me.kbrewster.blazeapi.events.ChatSentEvent
 import me.kbrewster.eventbus.Subscribe
+import org.kodein.di.Kodein
 
 @Service
-object CommandManager : AbstractService() {
+class CommandManager(override val kodein: Kodein) : AbstractService() {
     private val commandLoaders = listOf(AnnotationCommandLoader)
     private val commands = mutableListOf<CommandData>()
 
