@@ -1,11 +1,11 @@
-package cc.hyperium.game.huds
+package cc.hyperium.game.hud
 
-import cc.hyperium.game.huds.modules.Module
+import cc.hyperium.game.hud.elements.Element
 import cc.hyperium.utils.Registry
 
 class HUD(private val name: String,
           private val x: Int, private val y: Int,
-          private val scheme: ColorScheme) : Registry<Module>() {
+          private val scheme: ColorScheme) : Registry<Element>() {
 
     fun render() {
         this.forEach { module -> module.render(scheme, x, y) }

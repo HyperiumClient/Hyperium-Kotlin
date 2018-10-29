@@ -1,9 +1,9 @@
-package cc.hyperium.game.huds.modules
+package cc.hyperium.game.hud.elements
 
-import cc.hyperium.game.huds.ColorScheme
+import cc.hyperium.game.hud.ColorScheme
 
 
-interface Module {
+interface Element {
 
     val name: String
 

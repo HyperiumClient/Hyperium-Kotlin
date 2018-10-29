@@ -1,4 +1,4 @@
-package cc.hyperium.game.huds
+package cc.hyperium.game.hud
 
 import java.awt.Color
 
