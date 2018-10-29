@@ -1,6 +1,6 @@
 package cc.hyperium.game.hud
 
-import cc.hyperium.game.hud.elements.Element
+import cc.hyperium.game.hud.element.Element
 import cc.hyperium.utils.Registry
 
 class HUD(private val name: String,

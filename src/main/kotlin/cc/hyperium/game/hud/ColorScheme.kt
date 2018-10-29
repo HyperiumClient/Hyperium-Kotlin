@@ -1,7 +1,7 @@
 package cc.hyperium.game.hud
 
-import java.awt.Color
+import net.minecraft.util.EnumChatFormatting
 
-data class ColorScheme(val primary: Color,
-                       val secondary: Color,
-                       val tertiary: Color)
+data class ColorScheme(val primary: EnumChatFormatting,
+                       val secondary: EnumChatFormatting,
+                       val tertiary: EnumChatFormatting)
