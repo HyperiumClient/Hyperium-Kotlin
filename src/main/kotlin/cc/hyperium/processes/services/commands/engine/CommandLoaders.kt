@@ -3,14 +3,14 @@ package cc.hyperium.processes.services.commands.engine
 import cc.hyperium.Hyperium
 import cc.hyperium.processes.services.commands.CommandManager
 import cc.hyperium.processes.services.commands.api.Command
+import org.kodein.di.generic.instance
+import org.reflections.Reflections
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.companionObjectInstance
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.jvm.javaMethod
 import kotlin.reflect.jvm.kotlinFunction
-
-val ref = Hyperium.REFLECTIONS
 
 interface CommandLoader {
     fun loadCommands(): List<CommandData>
@@ -19,6 +19,8 @@ interface CommandLoader {
 }
 
 object AnnotationCommandLoader : CommandLoader {
+    private val ref: Reflections = Hyperium.dkodein.instance()
+
     override fun loadCommands(): List<CommandData> {
         return ref.getMethodsAnnotatedWith(Command::class.java).asSequence().map {
             it.kotlinFunction!!

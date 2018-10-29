@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.kodein.di.Kodein
 import org.kodein.di.bindings.subTypes
+import org.kodein.di.direct
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
@@ -39,12 +40,13 @@ object Hyperium {
     val config = ConfigFactory.createFileConfig("config-test.json", "json")
 
     lateinit var kodein: Kodein
+    val dkodein get() = kodein.direct
 
     @Subscribe
     fun onInit(event: InitializationEvent) {
         LOGGER.info("Starting Hyperium....")
 
-        // Start all of the services of the client!
+        // Time to start the client!
 
         // Asynchronously start the network connection.
         // We're using coroutines here because kotlin has them and they are cool!
@@ -61,7 +63,6 @@ object Hyperium {
         // Set up our Kodein instance
         // This provides all of the dependencies for injection
         kodein = constructKodein()
-
 
         // Load all of the services provided by the client.
         // This includes the command system, and other vital
