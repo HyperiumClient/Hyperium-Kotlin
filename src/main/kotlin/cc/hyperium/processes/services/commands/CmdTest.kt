@@ -7,15 +7,11 @@ import cc.hyperium.network.packets.Packets
 import cc.hyperium.processes.services.commands.api.Command
 import cc.hyperium.processes.services.commands.api.Greedy
 import cc.hyperium.processes.services.commands.api.Quotable
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 import java.util.*
 
-object CmdTest : KodeinAware {
-    override val kodein: Kodein = Hyperium.kodein
-
-    private val network: NetworkManager by kodein.instance()
+object CmdTest {
+    private val network: NetworkManager = Hyperium.dkodein.instance()
 
     @Command("packet")
     fun heartbeat(type: Optional<String>) {
