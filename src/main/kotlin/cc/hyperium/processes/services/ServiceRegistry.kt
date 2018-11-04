@@ -1,10 +1,12 @@
 package cc.hyperium.processes.services
 
-import cc.hyperium.Hyperium
 import cc.hyperium.utils.Registry
 import cc.hyperium.utils.instance
 import net.minecraft.client.resources.I18n
+import org.apache.logging.log4j.Logger
 import org.kodein.di.Kodein
+import org.kodein.di.direct
+import org.kodein.di.generic.instance
 import org.reflections.Reflections
 
 class ServiceRegistry : Registry<AbstractService>() {
@@ -32,7 +34,7 @@ class ServiceRegistry : Registry<AbstractService>() {
         try {
             clazz.instance<AbstractService>(kodein)
         } catch (e: Exception) {
-            Hyperium.LOGGER.error(I18n.format("error.loading.service", clazz.name), e)
+            kodein.direct.instance<Logger>().error(I18n.format("error.loading.service", clazz.name), e)
             null
         }
 
