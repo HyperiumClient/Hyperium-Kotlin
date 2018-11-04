@@ -1,6 +1,9 @@
 package cc.hyperium.utils
 
-open class Registry<T> : ArrayList<T>() {
+import org.kodein.di.TTOf
+import org.kodein.di.TypeToken
+
+open class Registry<T : Any> : ArrayList<T>() {
 
     fun register(element: T): Boolean {
         return this.add(element)
@@ -14,4 +17,10 @@ open class Registry<T> : ArrayList<T>() {
         this.remove(obj)
     }
 
+    @Suppress("UNCHECKED_CAST")
+    fun <A> getInstanceOfClass(token: TypeToken<A>): A {
+        return this.firstOrNull {
+            token.isAssignableFrom(TTOf(it))
+        } as A
+    }
 }

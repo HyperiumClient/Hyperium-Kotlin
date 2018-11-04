@@ -8,6 +8,7 @@ object Dependencies {
     const val kryonet = "com.github.FalseHonesty:kryonet:${Versions.kryonet}"
     const val reflections = "com.github.FalseHonesty:reflections:${Versions.reflections}"
     const val hyperiumNetworking = "com.github.FalseHonesty:Hyperium-Networking:${Versions.hyperiumNetworking}"
+    const val kodein = "org.kodein.di:kodein-di-generic-jvm:${Versions.kodein}"
 
     const val kotlinx_coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinx_coroutines}"
 }
@@ -24,5 +25,6 @@ fun Project.applyStandardDependencies() {
         "compile"(Dependencies.kryonet)
         "compile"(Dependencies.reflections)
         "compile"(Dependencies.hyperiumNetworking)
+        "compile"(Dependencies.kodein)
     }
 }

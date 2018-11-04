@@ -1,6 +1,8 @@
 package cc.hyperium.game.mods.visual
 
 import cc.hyperium.processes.services.game.mod.Mod
+import org.kodein.di.Kodein
 
-object Fullbright : Mod() {
+class Fullbright(override val kodein: Kodein) : Mod() {
+
 }

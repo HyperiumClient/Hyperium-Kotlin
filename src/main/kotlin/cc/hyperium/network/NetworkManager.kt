@@ -5,14 +5,22 @@ import cc.hyperium.network.packets.Packets
 import com.esotericsoftware.kryonet.Client
 import com.esotericsoftware.kryonet.Connection
 import com.esotericsoftware.kryonet.Listener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.net.SocketTimeoutException
+import kotlin.coroutines.CoroutineContext
 
-object NetworkManager {
-
-    private const val HOST = "localhost"
-    private const val PORT = 9001
-
+class NetworkManager : CoroutineScope {
+    private val HOST = "localhost"
+    private val PORT = 9001
     private lateinit var client: Client
+
+    private val job = Job()
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Default + job
 
     /**
      * Attempts to connect to the Hyperium Server.
@@ -46,10 +54,23 @@ object NetworkManager {
      * To send a packet, it must be registered via the
      * [registerPacket] function beforehand.
      *
+     * This method defaults to being asynchronous,
+     * but that can be changed with the [async] parameter.
+     * If the method is asynchronous, this method will
+     * always return true.
+     *
      * @return true if the packet was sent successfully
      */
-    fun sendPacket(packet: IPacket): Boolean {
+    fun sendPacket(packet: IPacket, async: Boolean = true): Boolean {
         if (!this.client.isConnected) return false
+
+        if (async) {
+            launch {
+                client.sendTCP(packet)
+            }
+
+            return true
+        }
 
         return this.client.sendTCP(packet) != 0
     }
@@ -81,4 +102,7 @@ object NetworkManager {
         this.client.removeListener(listener)
     }
 
+    fun finalize() {
+        job.cancel()
+    }
 }

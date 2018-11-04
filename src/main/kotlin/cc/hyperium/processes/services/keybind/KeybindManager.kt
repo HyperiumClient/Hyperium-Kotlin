@@ -4,9 +4,10 @@ import cc.hyperium.processes.services.AbstractService
 import cc.hyperium.processes.services.Service
 import me.kbrewster.blazeapi.events.InputEvents
 import me.kbrewster.eventbus.Subscribe
+import org.kodein.di.Kodein
 
 @Service
-object KeybindManager : AbstractService() {
+class KeybindManager(override val kodein: Kodein) : AbstractService() {
 
     val bindings = HashSet<Bindable<LWJGLKey>>()
 

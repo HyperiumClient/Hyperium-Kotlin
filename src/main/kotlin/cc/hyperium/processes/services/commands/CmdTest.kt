@@ -1,18 +1,22 @@
 package cc.hyperium.processes.services.commands
 
+import cc.hyperium.Hyperium
 import cc.hyperium.network.NetworkManager
 import cc.hyperium.network.packets.CrossClientData
 import cc.hyperium.network.packets.Packets
 import cc.hyperium.processes.services.commands.api.Command
 import cc.hyperium.processes.services.commands.api.Greedy
 import cc.hyperium.processes.services.commands.api.Quotable
+import org.kodein.di.generic.instance
 import java.util.*
 
 object CmdTest {
+    private val network: NetworkManager = Hyperium.dkodein.instance()
+
     @Command("packet")
     fun heartbeat(type: Optional<String>) {
         if (!type.isPresent) {
-            val res = NetworkManager.sendPacket(Packets.HEARTBEAT.newInstance())
+            val res = network.sendPacket(Packets.HEARTBEAT.newInstance())
 
             println(if (res) "Sent packet!" else "Failed to send packet :(")
 
@@ -20,7 +24,7 @@ object CmdTest {
         }
 
         val res = when (type.get()) {
-            "data" -> NetworkManager.sendPacket(CrossClientData("LUL!"))
+            "data" -> network.sendPacket(CrossClientData("LUL!"))
             else -> false
         }
 
