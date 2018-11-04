@@ -61,7 +61,7 @@ object NetworkManager {
      * of the specified type. By making the type [IPacket], the function will be called
      * when receiving any packet.
      */
-    inline fun <reified T : IPacket> addListener(crossinline listener: (packet: T) -> Unit) {
+    inline fun <reified T : IPacket> addListener(crossinline listener: (T) -> Unit) {
         val listenerObj = object : Listener() {
             override fun received(connection: Connection, packet: Any?) {
                 if (packet is T) {
