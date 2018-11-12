@@ -1,5 +1,6 @@
 package cc.hyperium
 
+import cc.hyperium.game.server.ServerRegistry
 import cc.hyperium.network.NetworkManager
 import cc.hyperium.processes.services.AbstractService
 import cc.hyperium.processes.services.ServiceRegistry
@@ -47,7 +48,6 @@ object Hyperium {
 
         // Time to start the client!
 
-
         // Asynchronously start the network connection.
         // We're using coroutines here because kotlin has them and they are cool!
         val networkJob = GlobalScope.launch {
@@ -68,6 +68,11 @@ object Hyperium {
         // This includes the command system, and other vital
         // client services.
         runningServices.bootstrap(reflections, kodein)
+
+        // Boot up the server registry.
+        // The server registry deals with what server is
+        // currently being played on and all the associated details.
+        ServerRegistry.bootstrap(reflections)
 
         // However, by the time we are starting the client, we want to be registered.
         // To confirm that this has happened, we will join the network job thread,

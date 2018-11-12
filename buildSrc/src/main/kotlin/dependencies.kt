@@ -3,7 +3,7 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.kotlin
 
 object Dependencies {
-    const val blazeApi = "com.github.KevinPriv:BlazeAPI:${Versions.blazeApi}"
+    const val blazeApi = "com.github.FalseHonesty:BlazeAPI:${Versions.blazeApi}"
 
     const val kryonet = "com.github.FalseHonesty:kryonet:${Versions.kryonet}"
     const val reflections = "com.github.FalseHonesty:reflections:${Versions.reflections}"
