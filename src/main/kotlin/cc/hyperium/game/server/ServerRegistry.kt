@@ -32,8 +32,8 @@ object ServerRegistry : Registry<MinecraftServer>() {
     @Subscribe
     fun leaveServer(e: ServerDisconnectEvent) {
         this.currentServer?.let {
-            EVENT_BUS.unregister(it)
             it.kill()
+            EVENT_BUS.unregister(it)
         }
 
         this.currentServer = null
