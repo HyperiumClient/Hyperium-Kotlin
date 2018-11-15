@@ -66,3 +66,10 @@ val packageSources by tasks.creating(Jar::class) {
 artifacts {
     add("archives", packageSources)
 }
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+}

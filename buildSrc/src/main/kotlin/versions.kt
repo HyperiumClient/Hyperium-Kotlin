@@ -11,6 +11,9 @@ object Versions {
 
     const val kotlinx_coroutines = "1.0.0-RC1"
 
+    const val junit = "5.3.1"
+    const val mockk = "1.8.12.kotlin13"
+
     // Plugins
 
     const val forge_gradle = "2.2-SNAPSHOT"
