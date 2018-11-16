@@ -7,7 +7,7 @@ import me.kbrewster.blazeapi.events.ServerJoinEvent
 import me.kbrewster.eventbus.Subscribe
 
 @RegisterEvents
-object ServerRegistry : Registry<MinecraftServer>() {
+class ServerRegistry : Registry<MinecraftServer>() {
     private var currentServer: MinecraftServer? = null
 
     @Subscribe

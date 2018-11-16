@@ -7,31 +7,21 @@ import cc.hyperium.utils.Failure
 import cc.hyperium.utils.Success
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.assertAll
 import java.util.*
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TestCommands {
     private val USAGE = "Usage"
 
-    private lateinit var data: CommandData
-
-    @BeforeAll
-    fun construct() {
-        val function = TestCommands::exampleFun
-        val params = function.parameters
-
-        data = CommandData(
-            name = "",
-            parameters = params,
-            function = function,
-            usage = TestCommands::usageFun,
-            instance = Unit
-        )
-    }
+    private val data = CommandData(
+        name = "",
+        parameters = TestCommands::exampleFun.parameters,
+        function = TestCommands::exampleFun,
+        usage = TestCommands::usageFun,
+        instance = Unit
+    )
 
     @Test
     fun `instance params return the class instance`() {
@@ -50,56 +40,62 @@ class TestCommands {
         })
     }
 
-    @Test
-    fun `valid normal arguments return success`() {
-        val args = ArgumentQueue(LinkedList(listOf("1337")))
+    @Nested
+    inner class NormalArguments {
+        @Test
+        fun `valid normal arguments return success`() {
+            val args = ArgumentQueue(LinkedList(listOf("1337")))
 
-        val result = CommandParser.parseParameter(
-            data.parameters[1],
-            args,
-            data
-        )
+            val result = CommandParser.parseParameter(
+                data.parameters[1],
+                args,
+                data
+            )
 
-        assertTrue(result is Success)
+            assertTrue(result is Success)
+        }
+
+        @Test
+        fun `invalid normal arguments return failure`() {
+            val args = ArgumentQueue(LinkedList(listOf("string")))
+
+            val result = CommandParser.parseParameter(
+                data.parameters[1],
+                args,
+                data
+            )
+
+            assertTrue(result is Failure)
+        }
     }
 
-    @Test
-    fun `invalid normal arguments return failure`() {
-        val args = ArgumentQueue(LinkedList(listOf("string")))
+    @Nested
+    inner class OptionalArguments {
+        @Test
+        fun `valid optional arguments return success`() {
+            val args = ArgumentQueue(LinkedList(listOf("1337")))
 
-        val result = CommandParser.parseParameter(
-            data.parameters[1],
-            args,
-            data
-        )
+            val result = CommandParser.parseParameter(
+                data.parameters[2],
+                args,
+                data
+            )
 
-        assertTrue(result is Failure)
-    }
+            assertTrue(result is Success)
+        }
 
-    @Test
-    fun `valid optional arguments return success`() {
-        val args = ArgumentQueue(LinkedList(listOf("1337")))
+        @Test
+        fun `invalid optional arguments return success`() {
+            val args = ArgumentQueue(LinkedList(listOf("string")))
 
-        val result = CommandParser.parseParameter(
-            data.parameters[2],
-            args,
-            data
-        )
+            val result = CommandParser.parseParameter(
+                data.parameters[2],
+                args,
+                data
+            )
 
-        assertTrue(result is Success)
-    }
-
-    @Test
-    fun `invalid optional arguments return success`() {
-        val args = ArgumentQueue(LinkedList(listOf("string")))
-
-        val result = CommandParser.parseParameter(
-            data.parameters[2],
-            args,
-            data
-        )
-
-        assertTrue(result is Success)
+            assertTrue(result is Success)
+        }
     }
 
     private fun exampleFun(normal: Int, optional: Optional<Int>) {}
