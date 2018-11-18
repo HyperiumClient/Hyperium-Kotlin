@@ -11,6 +11,12 @@ object Dependencies {
     const val kodein = "org.kodein.di:kodein-di-generic-jvm:${Versions.kodein}"
 
     const val kotlinx_coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinx_coroutines}"
+
+    const val junit_api = "org.junit.jupiter:junit-jupiter-api:${Versions.junit}"
+    const val junit_params = "org.junit.jupiter:junit-jupiter-params:${Versions.junit}"
+    const val junit_engine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit}"
+
+    const val mockk = "io.mockk:mockk:${Versions.mockk}"
 }
 
 fun Project.applyStandardDependencies() {
@@ -26,5 +32,10 @@ fun Project.applyStandardDependencies() {
         "compile"(Dependencies.reflections)
         "compile"(Dependencies.hyperiumNetworking)
         "compile"(Dependencies.kodein)
+
+        "testCompile"(Dependencies.junit_api)
+        "testCompile"(Dependencies.junit_params)
+        "testCompile"(Dependencies.junit_engine)
+        "testCompile"(Dependencies.mockk)
     }
 }
