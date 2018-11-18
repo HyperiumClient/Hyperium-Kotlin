@@ -9,12 +9,10 @@ import org.lwjgl.input.Mouse
 
 @RegisterEvents
 class Rendering {
-
     @Subscribe
     fun onTick(event: ClientTickEvent) {
         scaledResolution = ScaledResolution(mc)
     }
-
 }
 
 var scaledResolution = ScaledResolution(mc)

@@ -1,12 +1,14 @@
 package cc.hyperium.processes.services.commands
 
 import cc.hyperium.Hyperium
+import cc.hyperium.game.player.hyplayer
 import cc.hyperium.network.NetworkManager
 import cc.hyperium.network.packets.CrossClientData
 import cc.hyperium.network.packets.Packets
 import cc.hyperium.processes.services.commands.api.Command
 import cc.hyperium.processes.services.commands.api.Greedy
 import cc.hyperium.processes.services.commands.api.Quotable
+import me.kbrewster.blazeapi.client.thePlayer
 import org.kodein.di.generic.instance
 import java.util.*
 
@@ -29,6 +31,13 @@ object CmdTest {
         }
 
         println(if (res) "Sent packet!" else "Failed to send packet :(")
+    }
+
+    @Command("player")
+    fun getPlayer(name: Optional<String>) {
+        if (!name.isPresent) {
+            println(thePlayer.hyplayer)
+        }
     }
 
     @Command("gay")

@@ -1,4 +1,4 @@
-package cc.hyperium.game.server.hypixel
+package cc.hyperium.game.server.servers
 
 import cc.hyperium.game.server.MinecraftServer
 
