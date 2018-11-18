@@ -53,7 +53,7 @@ object CommandParser {
         )
     }
 
-    private fun parseParameter(param: KParameter, queue: ArgumentQueue, data: CommandData): Try<Any> {
+    fun parseParameter(param: KParameter, queue: ArgumentQueue, data: CommandData): Try<Any> {
         if (param.kind == KParameter.Kind.INSTANCE) {
             return Success(data.instance)
         }

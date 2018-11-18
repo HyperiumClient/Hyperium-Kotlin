@@ -10,12 +10,12 @@ import me.kbrewster.eventbus.Subscribe
 import org.reflections.Reflections
 
 @RegisterEvents
-object ServerRegistry : Registry<MinecraftServer>() {
-    var currentServer: MinecraftServer? = null
+class ServerRegistry : Registry<MinecraftServer>() {
+    private var currentServer: MinecraftServer? = null
 
     fun bootstrap(ref: Reflections) {
         ref.getSubTypesOf(MinecraftServer::class.java).forEach {
-            add(it.instance())
+            this.add(it.instance())
         }
     }
 
