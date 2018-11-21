@@ -1,5 +1,5 @@
 object Versions {
-    const val kotlin = "1.3.0-rc-190"
+    const val kotlin = "1.3.10"
 
     // Libraries
 
@@ -9,7 +9,7 @@ object Versions {
     const val hyperiumNetworking = "66a8dba092"
     const val kodein = "5.3.0"
 
-    const val kotlinx_coroutines = "1.0.0-RC1"
+    const val kotlinx_coroutines = "1.0.1"
 
     const val junit = "5.3.1"
     const val mockk = "1.8.12.kotlin13"
