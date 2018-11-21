@@ -1,9 +1,9 @@
 package cc.hyperium.game.server
 
-import kotlinx.coroutines.Job
 import cc.hyperium.processes.Process
+import kotlinx.coroutines.Job
 
-abstract class MinecraftServer(
+open class MinecraftServer(
     val addresses: List<String>,
     val port: Int = 25565
 ) : Process {

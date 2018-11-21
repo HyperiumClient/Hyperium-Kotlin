@@ -1,6 +1,6 @@
 package cc.hyperium.game.server
 
-import cc.hyperium.processes.services.utilities.RegisterEvents
+import cc.hyperium.utils.PublishedRegistry
 import cc.hyperium.utils.Registry
 import cc.hyperium.utils.instance
 import me.kbrewster.blazeapi.EVENT_BUS
@@ -9,7 +9,7 @@ import me.kbrewster.blazeapi.events.ServerJoinEvent
 import me.kbrewster.eventbus.Subscribe
 import org.reflections.Reflections
 
-@RegisterEvents
+@PublishedRegistry
 class ServerRegistry : Registry<MinecraftServer>() {
     private var currentServer: MinecraftServer? = null
 

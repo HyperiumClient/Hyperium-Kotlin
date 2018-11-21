@@ -15,4 +15,14 @@ open class Registry<T : Any> : ArrayList<T>() {
             token.isAssignableFrom(TTOf(it))
         } as A
     }
+
+    inline fun <reified A> getInstanceOfClass(): A {
+        return this.first { it is A } as A
+    }
 }
+
+/**
+ * Marks this class to be created and managed
+ * by the [cc.hyperium.processes.services.RegistryManager].
+ */
+annotation class PublishedRegistry

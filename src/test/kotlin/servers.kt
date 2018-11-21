@@ -16,12 +16,15 @@ class TestServers {
     private val server = spyk(MinecraftServer(
         listOf("server.ip")
     ))
+    private val junkServer = spyk(MinecraftServer(
+        listOf("fake")
+    ))
 
     @BeforeEach
     fun setup() {
-        clearMocks(server)
-        registry = ServerRegistry()
+        clearMocks(server, junkServer)
 
+        registry = ServerRegistry()
         registry.add(server)
     }
 
@@ -39,9 +42,7 @@ class TestServers {
         @Test
         fun `only the correct server is joined`() {
             val event = ServerJoinEvent("server.ip", 25565)
-            val junkServer = spyk(MinecraftServer(
-                listOf("fake")
-            ))
+
 
             registry.joinServer(event)
 
@@ -65,9 +66,6 @@ class TestServers {
         @Test
         fun `only the correct server is joined`() {
             val event = ServerJoinEvent("server.ip", 25565)
-            val junkServer = spyk(MinecraftServer(
-                listOf("fake")
-            ))
 
             registry.joinServer(event)
             registry.leaveServer(mockk())
