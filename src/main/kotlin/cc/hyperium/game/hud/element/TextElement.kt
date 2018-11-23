@@ -19,7 +19,6 @@ abstract class TextElement(name: String, description: String) :
 
     var shadow: Boolean = false
 
-
     override fun render(scheme: ColorScheme, x: Int, y: Int) {
         fontRenderer.drawString(
                 prefix.format(name, value, scheme),
@@ -29,6 +28,4 @@ abstract class TextElement(name: String, description: String) :
                 shadow
         )
     }
-
-
 }

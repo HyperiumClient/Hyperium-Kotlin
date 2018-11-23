@@ -13,6 +13,7 @@ object Versions {
 
     const val junit = "5.3.1"
     const val mockk = "1.8.12.kotlin13"
+    const val ktlint = "0.29.0"
 
     // Plugins
 

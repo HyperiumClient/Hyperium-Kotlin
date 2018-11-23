@@ -51,5 +51,4 @@ class ServiceRegistry : Registry<AbstractService>() {
     fun shutdownServices() {
         this.removeAll(AbstractService::kill)
     }
-
 }

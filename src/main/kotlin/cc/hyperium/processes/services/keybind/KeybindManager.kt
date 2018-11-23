@@ -22,6 +22,4 @@ class KeybindManager(override val kodein: Kodein) : AbstractService() {
             }
         }
     }
-
-
 }

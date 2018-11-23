@@ -13,5 +13,4 @@ class DefaultBindable<Key : KeyboardKey>(val key: Key, val listener: KeyListener
             this.listener.onKeyRelease(key)
         }
     }
-
 }

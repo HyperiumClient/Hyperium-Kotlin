@@ -4,6 +4,4 @@ import cc.hyperium.game.server.MinecraftServer
 
 class SinglePlayer : MinecraftServer(
     listOf("localhost")
-) {
-
-}
+)

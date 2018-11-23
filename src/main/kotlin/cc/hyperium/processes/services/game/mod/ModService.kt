@@ -40,5 +40,4 @@ class ModService(override val kodein: Kodein) : AbstractService() {
     fun killMod(mod: Mod): Boolean {
         return childProcesses.find { it == mod }?.kill() ?: false
     }
-
 }

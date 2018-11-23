@@ -43,7 +43,6 @@ class TestServers {
         fun `only the correct server is joined`() {
             val event = ServerJoinEvent("server.ip", 25565)
 
-
             registry.joinServer(event)
 
             verify { server.onServerJoin() }

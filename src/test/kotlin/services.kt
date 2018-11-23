@@ -2,6 +2,7 @@ package cc.hyperium.processes
 
 import cc.hyperium.processes.services.AbstractService
 import cc.hyperium.processes.services.ServiceRegistry
+import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -10,17 +11,17 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class TestServices {
-    private var registry = ServiceRegistry()
+    private val registry = ServiceRegistry()
+    private val service = mockk<AbstractService>(relaxUnitFun = true)
 
     @BeforeEach
     fun setup() {
-        registry = ServiceRegistry()
+        registry.clear()
+        clearMocks(service)
     }
 
     @Test
     fun `services are initialized when added to registry`() {
-        val service = mockk<AbstractService>(relaxUnitFun = true)
-
         registry.add(service)
 
         verify { service.initialize() }
@@ -28,7 +29,6 @@ class TestServices {
 
     @Test
     fun `services are removed from registry when shutdown`() {
-        val service = mockk<AbstractService>(relaxUnitFun = true)
         every { service.kill() } returns true
 
         registry.add(service)
@@ -39,7 +39,6 @@ class TestServices {
 
     @Test
     fun `services are not removed from registry when they fail to shutdown`() {
-        val service = mockk<AbstractService>(relaxUnitFun = true)
         every { service.kill() } returns false
 
         registry.add(service)

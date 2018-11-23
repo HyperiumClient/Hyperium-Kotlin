@@ -2,7 +2,6 @@ package cc.hyperium.game.hud.element
 
 import cc.hyperium.game.hud.ColorScheme
 
-
 interface Element {
 
     val name: String
@@ -14,5 +13,4 @@ interface Element {
     val width: Int
 
     fun render(scheme: ColorScheme, x: Int, y: Int)
-
 }

@@ -26,7 +26,6 @@ class RegistryManager(override val kodein: Kodein) : AbstractService() {
                 registries.add(objectInstance as Registry<*>)
             }
 
-
         // Now for all of the registries that need special attention,
         // we'll bootstrap them here.
         val dk = kodein.direct

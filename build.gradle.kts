@@ -56,6 +56,8 @@ repositories {
     jcenter()
 }
 
+val ktlintConfig by configurations.creating
+
 applyStandardDependencies()
 
 val packageSources by tasks.creating(Jar::class) {
@@ -72,4 +74,23 @@ tasks.withType<Test> {
     testLogging {
         events("passed", "skipped", "failed")
     }
+}
+
+tasks.named<DefaultTask>("check") {
+    dependsOn(ktlint)
+}
+
+val ktlint by tasks.creating(JavaExec::class) {
+    group = "verification"
+    description = "Check Kotlin code style."
+    main = "com.github.shyiko.ktlint.Main"
+    classpath = ktlintConfig
+    args("src/main/**/*.kt")
+}
+
+val ktlintFormat by tasks.creating(JavaExec::class) {
+    description = "Fix Kotlin code style deviations."
+    main = "com.github.shyiko.ktlint.Main"
+    classpath = ktlintConfig
+    args("-F", "src/**/*.kt")
 }

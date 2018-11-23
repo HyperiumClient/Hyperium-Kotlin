@@ -10,7 +10,6 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.direct
 import org.kodein.di.generic.instance
 
-
 abstract class Mod(private val register: Boolean = true) : Process, KodeinAware {
     override lateinit var job: Job
 
