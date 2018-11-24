@@ -57,8 +57,6 @@ repositories {
     jcenter()
 }
 
-val ktlintConfig by configurations.creating
-
 applyStandardDependencies()
 
 val packageSources by tasks.creating(Jar::class) {
