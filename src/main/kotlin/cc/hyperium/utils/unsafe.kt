@@ -1,3 +1,5 @@
+@file:Suppress("TooGenericExceptionCaught")
+
 package cc.hyperium.utils
 
 import java.util.*

@@ -12,24 +12,12 @@ data class NotificationData(
 ) {
 
     class Builder {
-        private var title: String = ""
-        private var description: String = ""
-        private var backgroundColor: Color = Color(80, 80, 80)
-        private var accentColor: Color = Color(149, 201, 144)
-        private var link: String? = null
-        private var callback: (() -> Unit)? = null
-
-        fun title(title: String) = apply { this.title = title }
-
-        fun description(description: String) = apply { this.description = description }
-
-        fun backgroundColor(backgroundColor: Color) = apply { this.backgroundColor = backgroundColor }
-
-        fun accentColor(accentColor: Color) = apply { this.accentColor = accentColor }
-
-        fun link(link: String) = apply { this.link = link }
-
-        fun callback(callback: (() -> Unit)?) = apply { this.callback = callback }
+        var title: String = ""
+        var description: String = ""
+        var backgroundColor: Color = Color(80, 80, 80)
+        var accentColor: Color = Color(149, 201, 144)
+        var link: String? = null
+        var callback: (() -> Unit)? = null
 
         fun build() = NotificationData(title, description, backgroundColor, accentColor, link, callback)
     }

@@ -23,17 +23,17 @@ class ServerRegistry : Registry<MinecraftServer>() {
     fun joinServer(e: ServerJoinEvent) {
         this.currentServer = this.find { it.addresses.contains(e.ip) && it.port == e.port }
 
-        this.currentServer?.let {
-            EVENT_BUS.register(it)
-            it.initialize()
+        this.currentServer?.let { server ->
+            EVENT_BUS.register(server)
+            server.initialize()
         }
     }
 
     @Subscribe
     fun leaveServer(e: ServerDisconnectEvent) {
-        this.currentServer?.let {
-            it.kill()
-            EVENT_BUS.unregister(it)
+        this.currentServer?.let { server ->
+            server.kill()
+            EVENT_BUS.unregister(server)
         }
 
         this.currentServer = null

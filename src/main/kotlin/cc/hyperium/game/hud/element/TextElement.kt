@@ -5,7 +5,7 @@ import cc.hyperium.game.hud.element.format.Prefix
 import me.kbrewster.blazeapi.client.fontRenderer
 
 abstract class TextElement(name: String, description: String) :
-        AbstractElement(name, description) {
+    AbstractElement(name, description) {
 
     abstract val value: Any
 
@@ -21,11 +21,11 @@ abstract class TextElement(name: String, description: String) :
 
     override fun render(scheme: ColorScheme, x: Int, y: Int) {
         fontRenderer.drawString(
-                prefix.format(name, value, scheme),
-                x.toFloat(),
-                y.toFloat(),
-                0xFFFFFF,
-                shadow
+            prefix.format(name, value, scheme),
+            x.toFloat(),
+            y.toFloat(),
+            0xFFFFFF,
+            shadow
         )
     }
 }

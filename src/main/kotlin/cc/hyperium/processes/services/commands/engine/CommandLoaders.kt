@@ -33,18 +33,18 @@ object AnnotationCommandLoader : CommandLoader {
             .map { mapToData(it, instance)!! }
     }
 
-    private fun mapToData(it: KFunction<*>, instance: Any? = null): CommandData? {
-        val kotlinClass = it.javaMethod!!.declaringClass.kotlin
+    private fun mapToData(func: KFunction<*>, instance: Any? = null): CommandData? {
+        val kotlinClass = func.javaMethod!!.declaringClass.kotlin
         val inst = instance ?: kotlinClass.objectInstance ?: kotlinClass.companionObjectInstance ?: return null
-        val cmd = it.findAnnotation<Command>()!!
+        val cmd = func.findAnnotation<Command>()!!
         val usage = inst::class.memberFunctions.firstOrNull { inner ->
             inner.name == cmd.usage
         } ?: CommandManager::getGenericErrorMessage
 
         return CommandData(
             cmd.name,
-            it.parameters,
-            it,
+            func.parameters,
+            func,
             usage,
             inst
         )

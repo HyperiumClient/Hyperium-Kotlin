@@ -21,8 +21,8 @@ class ServiceRegistry : Registry<AbstractService>() {
         ref.getTypesAnnotatedWith(Service::class.java)
             .asSequence()
             .sortedByDescending { it.getAnnotation(Service::class.java).priority.ordinal }
-            .forEach {
-                val instance = classToService(it, kodein)
+            .forEach { clazz ->
+                val instance = classToService(clazz, kodein)
 
                 if (instance != null) this += instance
             }
@@ -33,7 +33,7 @@ class ServiceRegistry : Registry<AbstractService>() {
     private fun classToService(clazz: Class<*>, kodein: Kodein) =
         try {
             clazz.instance<AbstractService>(kodein)
-        } catch (e: Exception) {
+        } catch (e: NoSuchMethodException) {
             kodein.direct.instance<Logger>().error(I18n.format("error.loading.service", clazz.name), e)
             null
         }

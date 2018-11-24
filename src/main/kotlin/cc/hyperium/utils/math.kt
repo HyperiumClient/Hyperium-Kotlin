@@ -11,7 +11,7 @@ fun Float.easeOut(goal: Float, jump: Float, speed: Float): Float {
         goal
 }
 
-fun Float.map(in_min: Float, in_max: Float, out_min: Float, out_max: Float): Float {
-    val num = (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
-    return num.clamp(out_min, out_max)
+fun Float.map(inMin: Float, inMax: Float, outMin: Float, outMax: Float): Float {
+    val num = (this - inMin) * (outMax - outMin) / (inMax - inMin) + outMin
+    return num.clamp(outMin, outMax)
 }

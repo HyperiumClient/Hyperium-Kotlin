@@ -14,11 +14,10 @@ import java.util.*
 
 @Service
 class NotificationService(override val kodein: Kodein) : AbstractService() {
-
     private val notifications: Queue<Notification> = LinkedList()
     private var currentNotif: Notification? = null
     private var sysTime: Long = Minecraft.getSystemTime()
-    private val FPS = 60L
+    private val fps = 60L
 
     override fun initialize() {
         super.initialize()
@@ -44,9 +43,9 @@ class NotificationService(override val kodein: Kodein) : AbstractService() {
         if (currentNotif == null) return
         var calls = 0
 
-        while (sysTime < Minecraft.getSystemTime() + 1000 / FPS) {
+        while (sysTime < Minecraft.getSystemTime() + 1000 / fps) {
             currentNotif?.update()
-            this.sysTime += 1000 / FPS
+            this.sysTime += 1000 / fps
 
             calls++
         }

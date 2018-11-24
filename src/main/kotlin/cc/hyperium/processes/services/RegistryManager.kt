@@ -19,8 +19,8 @@ class RegistryManager(override val kodein: Kodein) : AbstractService() {
         super.initialize()
 
         ref.getTypesAnnotatedWith(PublishedRegistry::class.java)
-            .forEach {
-                val objectInstance = it.kotlin.objectInstance ?: it.newInstance() ?: return@forEach
+            .forEach { clazz ->
+                val objectInstance = clazz.kotlin.objectInstance ?: clazz.newInstance() ?: return@forEach
 
                 EVENT_BUS.register(objectInstance)
                 registries.add(objectInstance as Registry<*>)

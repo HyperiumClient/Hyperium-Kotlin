@@ -20,6 +20,7 @@ version = "1.0-SNAPSHOT"
 
 plugins {
     kotlin("jvm") version Versions.kotlin
+    id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
 }
 
 apply {
@@ -76,21 +77,6 @@ tasks.withType<Test> {
     }
 }
 
-tasks.named<DefaultTask>("check") {
-    dependsOn(ktlint)
-}
-
-val ktlint by tasks.creating(JavaExec::class) {
-    group = "verification"
-    description = "Check Kotlin code style."
-    main = "com.github.shyiko.ktlint.Main"
-    classpath = ktlintConfig
-    args("src/main/**/*.kt")
-}
-
-val ktlintFormat by tasks.creating(JavaExec::class) {
-    description = "Fix Kotlin code style deviations."
-    main = "com.github.shyiko.ktlint.Main"
-    classpath = ktlintConfig
-    args("-F", "src/**/*.kt")
+detekt {
+    config = files("detekt-config.yml")
 }

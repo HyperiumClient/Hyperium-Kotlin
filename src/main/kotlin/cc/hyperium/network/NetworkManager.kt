@@ -13,8 +13,8 @@ import java.net.SocketTimeoutException
 import kotlin.coroutines.CoroutineContext
 
 class NetworkManager : CoroutineScope {
-    private val HOST = "localhost"
-    private val PORT = 9001
+    private val host = "localhost"
+    private val port = 9001
     private lateinit var client: Client
 
     private val job = Job()
@@ -33,7 +33,7 @@ class NetworkManager : CoroutineScope {
     internal fun bootstrapClient() {
         this.client = Client()
         this.client.start()
-        this.client.connect(5000, HOST, PORT)
+        this.client.connect(5000, host, port)
 
         Packets.forEach(::registerPacket)
     }
