@@ -1,5 +1,9 @@
-[ ![Discord](https://canary.discordapp.com/api/guilds/411619823445999637/widget.png) ](https://discord.gg/8GakFcT)
-[ ![Travis-CI](https://travis-ci.org/HyperiumClient/Hyperium.svg?branch=master)](https://travis-ci.org/HyperiumClient/Hyperium)
+[ ![Discord](https://canary.discordapp.com/api/guilds/411619823445999637/widget.png) ](https://discord.gg/8GakFcT) <!-- [ ![Travis-CI](https://travis-ci.org/HyperiumClient/Hyperium.svg?branch=master)](https://travis-ci.org/HyperiumClient/Hyperium) (Travis not enabled in this repo)-->
+[![Hyperium Website Badge](https://img.shields.io/badge/visit%20our-website-red.svg)](https://hyperium.cc)
+[![Twitter Follower Count](https://img.shields.io/twitter/follow/HyperiumClient.svg?label=Follow&style=social)](https://twitter.com/HyperiumClient)
+[![GitHub Forks](https://img.shields.io/github/forks/HyperiumClient/Hyperium-Kotlin.svg?style=social&label=Fork&maxAge=2592000)](https://github.com/HyperiumClient/Hyperium-Kotlin/network)
+[![GitHub Stars](https://img.shields.io/github/stars/HyperiumClient/Hyperium-Kotlin.svg?style=social&label=Star&maxAge=2592000)](https://github.com/HyperiumClient/Hyperium-Kotlin/stargazers)
+[![GitHub Watches](https://img.shields.io/github/watchers/HyperiumClient/Hyperium-Kotlin.svg?style=social&label=Watch&maxAge=2592000)](https://github.com/HyperiumClient/Hyperium-Kotlin/watchers)  
 # Hyperium  
 ## What is Hyperium? ##
 Hyperium is a Minecraft client, currently in its development stage. It will combine many popular features, in addition to suggestions and ideas from the community, in order to provide a unique experience designed for Hypixel.
