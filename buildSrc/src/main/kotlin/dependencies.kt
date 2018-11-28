@@ -17,6 +17,7 @@ object Dependencies {
     const val junit_engine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit}"
 
     const val mockk = "io.mockk:mockk:${Versions.mockk}"
+    const val detekt = "io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}"
 }
 
 fun Project.applyStandardDependencies() {
@@ -37,5 +38,6 @@ fun Project.applyStandardDependencies() {
         "testCompile"(Dependencies.junit_params)
         "testCompile"(Dependencies.junit_engine)
         "testCompile"(Dependencies.mockk)
+        "detektPlugins"(Dependencies.detekt)
     }
 }

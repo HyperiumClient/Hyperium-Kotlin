@@ -7,10 +7,10 @@
   "mixins": [
     "MixinMinecraft",
     "client.resources.MixinLocale",
-    "entity.player.MixinEntityPlayer",
     "entity.MixinEntity",
     "entity.MixinEntityLivingBase",
     "entity.MixinRenderPlayer",
+    "entity.player.MixinEntityPlayer",
     "gui.MixinGuiGameOver",
     "gui.MixinGuiScreen",
     "gui.MixinInventoryEffectRenderer",

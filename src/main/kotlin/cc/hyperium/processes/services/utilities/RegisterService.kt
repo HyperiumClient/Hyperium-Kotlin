@@ -19,8 +19,8 @@ class RegisterService(override val kodein: Kodein) : AbstractService() {
 
         reflections
             .getTypesAnnotatedWith(RegisterEvents::class.java)
-            .forEach {
-                val objectInstance = it.kotlin.objectInstance ?: it.newInstance() ?: return@forEach
+            .forEach { clazz ->
+                val objectInstance = clazz.kotlin.objectInstance ?: clazz.newInstance() ?: return@forEach
 
                 EVENT_BUS.register(objectInstance)
             }

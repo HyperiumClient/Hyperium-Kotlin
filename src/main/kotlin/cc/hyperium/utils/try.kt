@@ -23,6 +23,7 @@ sealed class Try<out A> {
         }
 
     companion object {
+        @Suppress("TooGenericExceptionCaught")
         inline operator fun <A> invoke(body: () -> A?) =
             try {
                 val res = body()

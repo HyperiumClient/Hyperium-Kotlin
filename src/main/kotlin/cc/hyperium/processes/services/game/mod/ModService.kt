@@ -28,7 +28,7 @@ class ModService(override val kodein: Kodein) : AbstractService() {
     private fun classToMod(clazz: Class<*>) =
         try {
             clazz.instance<Mod>(kodein)
-        } catch (e: Exception) {
+        } catch (e: NoSuchMethodException) {
             logger.error(I18n.format("error.loading.mod", clazz.name), e)
             null
         }
@@ -40,5 +40,4 @@ class ModService(override val kodein: Kodein) : AbstractService() {
     fun killMod(mod: Mod): Boolean {
         return childProcesses.find { it == mod }?.kill() ?: false
     }
-
 }

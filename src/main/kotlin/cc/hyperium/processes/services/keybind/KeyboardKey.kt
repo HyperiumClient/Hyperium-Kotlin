@@ -3,7 +3,6 @@ package cc.hyperium.processes.services.keybind
 import org.lwjgl.input.Keyboard
 import java.util.*
 
-
 open class KeyboardKey(val keyName: String, val keyCode: Int)
 
 class LWJGLKey(keyName: String, keyCode: Int) :
@@ -26,7 +25,6 @@ class LWJGLKey(keyName: String, keyCode: Int) :
             val keyName = Keyboard.getKeyName(keyIndex)
             return LWJGLKey(keyName ?: Integer.toString(keyIndex), keyIndex)
         }
-
     }
 
     override fun equals(other: Any?): Boolean {

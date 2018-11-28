@@ -8,8 +8,7 @@ import org.kodein.di.Kodein
 
 @Service
 class KeybindManager(override val kodein: Kodein) : AbstractService() {
-
-    val bindings = HashSet<Bindable<LWJGLKey>>()
+    private val bindings = HashSet<Bindable<LWJGLKey>>()
 
     @Subscribe
     fun onKeyPress(event: InputEvents.Keypress) {
@@ -22,6 +21,4 @@ class KeybindManager(override val kodein: Kodein) : AbstractService() {
             }
         }
     }
-
-
 }

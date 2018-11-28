@@ -62,10 +62,10 @@ class Notification(private val data: NotificationData) : Gui() {
     fun isInside(x: Int, y: Int): Boolean {
         val border = getBorder()
 
-        return x > border.x1
-                && x < border.x2
-                && y > border.y1
-                && y < border.y2
+        return x > border.x1 &&
+                x < border.x2 &&
+                y > border.y1 &&
+                y < border.y2
     }
 
     private fun getBorder() = object {

@@ -16,5 +16,4 @@ enum class Prefix(val format: (String, Any, ColorScheme) -> String) {
         val (primary, secondary, tertiary) = scheme
         "$secondary[$primary$name$secondary] $tertiary$value"
     }),
-
 }

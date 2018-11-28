@@ -20,6 +20,7 @@ version = "1.0-SNAPSHOT"
 
 plugins {
     kotlin("jvm") version Versions.kotlin
+    id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
 }
 
 apply {
@@ -72,4 +73,8 @@ tasks.withType<Test> {
     testLogging {
         events("passed", "skipped", "failed")
     }
+}
+
+detekt {
+    config = files("detekt-config.yml")
 }

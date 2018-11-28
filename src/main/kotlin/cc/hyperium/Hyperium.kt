@@ -24,6 +24,7 @@ import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
 import org.reflections.scanners.SubTypesScanner
 import org.reflections.scanners.TypeAnnotationsScanner
+import java.net.SocketTimeoutException
 
 object Hyperium {
     private val reflections = Reflections(
@@ -54,7 +55,7 @@ object Hyperium {
                 network = NetworkManager()
                 network.bootstrapClient()
                 logger.info("The connection to the Hyperium Server succeeded!")
-            } catch (e: Exception) {
+            } catch (e: SocketTimeoutException) {
                 logger.error("The connection to the Hyperium Server could not be completed.")
             }
         }

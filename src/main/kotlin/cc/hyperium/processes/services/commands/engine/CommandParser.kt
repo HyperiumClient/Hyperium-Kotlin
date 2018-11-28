@@ -31,8 +31,8 @@ object CommandParser {
     fun parseAndCallFunction(command: List<String>, data: CommandData) {
         val queue = ArgumentQueue(LinkedList<String>(command))
 
-        val paramMap = data.parameters.associateWith map@{
-            val parsed = parseParameter(it, queue, data)
+        val paramMap = data.parameters.associateWith map@{ param ->
+            val parsed = parseParameter(param, queue, data)
 
             return@map parsed.resolve {
                 fail(data.usage, data.instance)
