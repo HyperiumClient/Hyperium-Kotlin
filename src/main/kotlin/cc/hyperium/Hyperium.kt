@@ -3,6 +3,7 @@ package cc.hyperium
 import cc.hyperium.network.NetworkManager
 import cc.hyperium.processes.services.AbstractService
 import cc.hyperium.processes.services.ServiceRegistry
+import cc.hyperium.utils.ResourceManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -36,6 +37,7 @@ object Hyperium {
     )
     private val logger: Logger = LogManager.getLogger()
     private val runningServices = ServiceRegistry()
+    private val resourceManager = ResourceManager()
     private val config = ConfigFactory.createFileConfig("config-test.json", "json")
     private lateinit var network: NetworkManager
 
