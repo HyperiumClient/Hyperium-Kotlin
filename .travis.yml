@@ -3,6 +3,7 @@ jdk:
   - oraclejdk8
   - openjdk8
 rvm: 2.0.0
+before_install: "chmod +x gradlew"
 install:
   - "./gradlew setupCIWorkspace -S"
   - "bundle install"
