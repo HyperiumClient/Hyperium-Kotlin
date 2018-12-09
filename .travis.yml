@@ -1,30 +1,12 @@
 language: java
-after_success:
-  - wget https://raw.githubusercontent.com/k3rn31p4nic/travis-ci-discord-webhook/master/send.sh
-  - chmod +x send.sh
-  - ./send.sh success $WEBHOOK_URL
-after_failure:
-  - wget https://raw.githubusercontent.com/k3rn31p4nic/travis-ci-discord-webhook/master/send.sh
-  - chmod +x send.sh
-  - ./send.sh failure $WEBHOOK_URL
-before_install:
-  - echo $TRAVIS_BUILD_NUMBER > $TRAVIS_BUILD_DIR/src/main/resources/build.txt
-before_deploy:
-  - git config --local user.name "HyperiumDeploy"
-  - git config --local user.email "hyperiumclient@gmail.com"
-  - git tag -a $TRAVIS_BUILD_NUMBER -m "Automated beta build"
-  - "git push https://$GIT_TOKEN@github.com/HyperiumClient/Hyperium.git HEAD:master --follow-tags"
-after_deploy:
-  - wget https://gist.github.com/Cubxity/457736a7bcbfe6d6f3ae2a5db04c0806/raw/deploy-hook.sh
-  - chmod +x deploy-hook.sh
-  - ./deploy-hook.sh $CUBE_MAN
-deploy:
-  provider: releases
-  api_key: $GIT_TOKEN
-  skip_cleanup: true
-  file_glob: true
-  file: $TRAVIS_BUILD_DIR/build/libs/*
-  on:
-    repo: HyperiumClient/Hyperium
-    prerelease: true
-if: tag IS blank
+jdk:
+  - oraclejdk8
+  - openjdk8
+rvm: 2.0.0
+before_install: "chmod +x gradlew"
+install:
+  - "./gradlew setupCIWorkspace -S"
+  - "bundle install"
+script:
+  - "./gradlew build -S"
+  - "bundle exec danger"
